@@ -10,7 +10,7 @@ services:
   express-server:
     build: 
       context: .
-      dockerfile: Dockerfile-express
+      dockerfile: Dockerfile-flask
     ports:
       - "5000:5000"
     depends_on:
