@@ -1,0 +1,11 @@
+flask
+flask_mongoengine
+mongothon
+flask_cors
+flask_jwt_extended
+pyjwt
+flask_bcrypt
+flask_restful
+flask_marshmallow
+marshmallow-mongoengine
+document
