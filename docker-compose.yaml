@@ -1,13 +1,7 @@
 version: "3.8"
 services:
-  react-app:
-    build: 
-      context: .
-      dockerfile: Dockerfile-react
-    ports:
-      - "3000:3000"
 
-  express-server:
+  flask-server:
     build: 
       context: .
       dockerfile: Dockerfile-flask
@@ -17,11 +11,15 @@ services:
       - mongodb
 
   mongodb:
-    image: mongo:4
+    image: mongo:latest
+    container_name: party-pp-mongodb
     ports:
       - "27017:27017"
     volumes:
-      - mongodb-data:/data/db
+      - ./data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=adminsecret
 
 volumes:
   mongodb-data:

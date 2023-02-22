@@ -1,16 +1,23 @@
 import os
 
 class Config:
-    SECRET_KEY = os.environ.get('SECRET_KEY') or 'secret'
+    MONGODB_USERNAME = os.environ.get('MONGO_INITDB_ROOT_USERNAME') or 'admin'
+    MONGODB_PASSWORD = os.environ.get('MONGO_INITDB_ROOT_PASSWORD') or 'adminsecret'
     DEBUG = False
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    MONGODB_SETTINGS = { 'db': 'YOUR_DB_NAME' }
+    MONGODB_SETTINGS = { 
+        'db': 'planner-pp-dev',
+        'host': 'mongodb://localhost:27017/planner-pp-dev',
+        'username': Config.MONGODB_USERNAME,
+        'password': Config.MONGODB_PASSWORD,
+        'connect': False
+    }
 
 class TestingConfig(Config):
     TESTING = True
-    MONGODB_SETTINGS = { 'db': 'YOUR_TEST_DB_NAME' }
+    MONGODB_SETTINGS = { 'db': 'planner-pp-test' }
 
 class ProductionConfig(Config):
     MONGODB_SETTINGS = {
@@ -23,4 +30,4 @@ config_by_name = dict(
     prod=ProductionConfig
 )
 
-key = Config.SECRET_KEY
+# key = Config.SECRET_KEY

@@ -13,7 +13,7 @@ def get_ratings():
 
 @rating_controller.route('/rating/<rating_id>', methods=['GET'])
 def get_rating(rating_id):
-    rating = RatingService.get_rating(rating_id)
+    rating = RatingService.get_rating_by_id(rating_id)
     if not rating:
         return jsonify({"message": "Rating not found"}), 404
     return jsonify(rating.to_dict()), 200
@@ -21,7 +21,7 @@ def get_rating(rating_id):
 @rating_controller.route('/rating', methods=['POST'])
 def add_rating():
     data = request.get_json()
-    rating = RatingService.add_rating(data)
+    rating = RatingService.create_rating(data)
     if rating:
         return jsonify(rating), 201
     else:

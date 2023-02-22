@@ -1,7 +1,5 @@
-from flask_mongoengine import MongoEngine
 from datetime import datetime
-
-db = MongoEngine()
+from database import db
 
 class Address(db.EmbeddedDocument):
     """

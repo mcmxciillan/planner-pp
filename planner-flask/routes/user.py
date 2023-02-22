@@ -13,7 +13,7 @@ def get_users():
 
 @user_controller.route('/user/<user_id>', methods=['GET'])
 def get_user(user_id):
-    user = UserService.get_user(user_id)
+    user = UserService.get_user_by_id(user_id)
     if user:
         return jsonify(user), 200 
     else:
@@ -22,7 +22,7 @@ def get_user(user_id):
 @user_controller.route('/users', methods=['POST'])
 def add_user():
     data = request.get_json()
-    user = UserService.add_user(data)
+    user = UserService.create_user(data)
     if user:
         return jsonify(user), 200 
     else:

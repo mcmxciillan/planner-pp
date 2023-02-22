@@ -1,9 +1,7 @@
 from datetime import datetime
-from flask_mongoengine import MongoEngine
 from .user import User
 from .vendor import Vendor
-
-db = MongoEngine()
+from database import db
 
 class Rating(db.Document):
     rating = db.IntField(required=True)

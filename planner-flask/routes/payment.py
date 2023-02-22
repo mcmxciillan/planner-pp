@@ -14,7 +14,7 @@ def get_all_payments():
 @payment_controller.route('/payments', methods=['POST'])
 def create_payment():
     data = request.get_json()
-    payment = PaymentService.create_payment(data)
+    payment = PaymentService.add_payment(data)
     if payment:
         return jsonify(payment), 201
     else:

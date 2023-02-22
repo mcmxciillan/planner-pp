@@ -1,7 +1,7 @@
 from datetime import datetime
-from flask_mongoengine import MongoEngine
-
-db = MongoEngine()
+from .role import Role
+from .event import Event
+from database import db
 
 class User(db.Document):
     """
@@ -22,7 +22,7 @@ class User(db.Document):
     lastName = db.StringField(required=True)
     email = db.StringField(required=True, unique=True)
     password = db.StringField(required=True)
-    events = db.ListField(db.ObjectIdField())
-    roles = db.ListField(db.ObjectIdField())
+    events = db.ListField(db.ReferenceField(Event))
+    roles = db.ListField(db.ReferenceField(Role))
     createdAt = db.DateTimeField(default=datetime.utcnow)
     updatedAt = db.DateTimeField(default=datetime.utcnow)

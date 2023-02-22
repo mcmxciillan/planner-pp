@@ -1,7 +1,4 @@
-from datetime import datetime
-from flask_mongoengine import MongoEngine
-
-db = MongoEngine()
+from database import db
 
 class Role(db.Document):
     """

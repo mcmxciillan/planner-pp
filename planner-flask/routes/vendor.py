@@ -1,6 +1,4 @@
 from flask import Blueprint, jsonify, request
-from flask_mongoengine import Q
-from models.vendor import Vendor
 from services.vendor import VendorService
 
 vendor_controller = Blueprint('vendor_controller', __name__)
@@ -51,7 +49,6 @@ def delete_vendor(id):
         return jsonify(message='Vendor deleted'), 200
     else:
         return jsonify(message='Error deleting vendor'), 400
-    
 
 @vendor_controller.route('/search', methods=['GET'])
 def search_vendor():
