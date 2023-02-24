@@ -1,5 +1,4 @@
 import json
-from datetime import datetime
 from flask import jsonify
 from bson.objectid import ObjectId
 from models.payment import Payment
@@ -30,3 +29,8 @@ class PaymentService:
     def delete_payment(payment_id):
         Payment.objects.get(id=ObjectId(payment_id)).delete()
         return jsonify(message='Payment deleted successfully'), 200
+
+    @staticmethod
+    def process_payment(data):
+        print("Payment info {}".format(data))
+        return True

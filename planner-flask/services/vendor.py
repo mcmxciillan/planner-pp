@@ -1,5 +1,5 @@
 from flask import jsonify
-from models import Vendor
+from models.vendor import Vendor
 from mongoengine import GeoPointField
 
 class VendorService:
@@ -22,7 +22,7 @@ class VendorService:
 
     @staticmethod
     def update_vendor(vendor_id, data):
-        Vendor.objects(id=vendor_id).update(**data)
+        Vendor.objects(_id=vendor_id).update(**data)
         vendor = Vendor.objects.get(id=vendor_id)
         return vendor
 

@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify, request
+from flask_jwt_extended import jwt_required
 from services.payment import PaymentService
 
 payment_controller = Blueprint('payment_controller', __name__)
@@ -12,6 +13,7 @@ def get_all_payments():
         return jsonify(message='Error fetching payments'), 400
 
 @payment_controller.route('/payments', methods=['POST'])
+@jwt_required()
 def create_payment():
     data = request.get_json()
     payment = PaymentService.add_payment(data)

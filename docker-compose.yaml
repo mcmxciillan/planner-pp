@@ -20,6 +20,7 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=adminsecret
+      - JWT_SECRET_KEY=jwtsecretkey
 
 volumes:
   mongodb-data:

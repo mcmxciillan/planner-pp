@@ -1,8 +1,5 @@
-from flask_mongoengine import MongoEngine
 from datetime import datetime
 from models.user import User
-
-db = MongoEngine()
 
 class UserService:
 
@@ -30,6 +27,14 @@ class UserService:
         """Retrieve a specific user by ID"""
         try:
             return User.objects.get(_id=user_id)
+        except Exception as e:
+            raise e
+
+    @staticmethod
+    def get_user_by_emial(user_emial):
+        """Retrieve a specific user by ID"""
+        try:
+            return User.objects.get(email=user_emial)
         except Exception as e:
             raise e
 

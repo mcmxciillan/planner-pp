@@ -5,3 +5,13 @@ from .payment import payment_controller
 from .rating import rating_controller
 from .heartbeat import heartbeat_controller
 from .role import role_controller
+
+routes = [
+    user_controller,
+    vendor_controller,
+    event_controller,
+    payment_controller,
+    rating_controller,
+    heartbeat_controller,
+    role_controller
+]

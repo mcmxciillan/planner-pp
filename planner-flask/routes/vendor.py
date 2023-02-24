@@ -1,9 +1,11 @@
 from flask import Blueprint, jsonify, request
+from flask_jwt_extended import jwt_required
 from services.vendor import VendorService
 
 vendor_controller = Blueprint('vendor_controller', __name__)
 
 @vendor_controller.route('/vendors/create', methods=['POST'])
+@jwt_required()
 def create_vendor():
     """Create a new Vendor"""
     data = request.get_json()
@@ -32,6 +34,7 @@ def get_vendor(id):
         return jsonify(message='Error fetching vendor'), 400
 
 @vendor_controller.route('/vendor/<id>', methods=['PUT'])
+@jwt_required()
 def update_vendor(id):
     """Update a single vendor by id"""
     data = request.get_json()
@@ -42,6 +45,7 @@ def update_vendor(id):
         return jsonify(message='Error updating vendor'), 400
 
 @vendor_controller.route('/vendors/<id>', methods=['DELETE'])
+@jwt_required()
 def delete_vendor(id):
     """Delete a single vendor by id"""
     vendor = VendorService.delete_vendor(id)
