@@ -6,7 +6,6 @@ from services.auth import hash_password, authenticate_user
 
 auth_controller = Blueprint('auth_controller', __name__)
 
-
 @auth_controller.route('/signup', methods=['POST'])
 def signup():
     # Get user data from request body
@@ -39,12 +38,11 @@ def signup():
 
     return jsonify({'message': 'User created successfully', "userData": new_user}), 201
 
-
 # Create a login endpoint
 @auth_controller.route('/login', methods=['POST'])
 def login():
     email = request.json.get('email')
-    password = hash_password(request.json.get('password'))
+    password = request.json.get('password')
 
     # Authenticate user against the database
     user = authenticate_user(email, password)
@@ -52,8 +50,5 @@ def login():
         return jsonify({'error': 'Invalid credentials'}), 401
 
     # Create a JWT token for the user
-    access_token = create_access_token(identity=user._id)
-
+    access_token = create_access_token(identity=user.email)
     return jsonify({'access_token': access_token}), 200
-
-

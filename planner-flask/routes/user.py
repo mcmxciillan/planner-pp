@@ -12,23 +12,14 @@ def get_users():
     else:
         return jsonify(message='Error fetching users'), 400
 
-@user_controller.route('/user/<user_id>', methods=['GET'])
+@user_controller.route('/user/<user_email>', methods=['GET'])
 @jwt_required()
-def get_user(user_id):
-    user = UserService.get_user_by_id(user_id)
+def get_user(user_email):
+    user = UserService.get_user_by_email(user_email)
     if user:
         return jsonify(user), 200 
     else:
         return jsonify(message='Error fetching user'), 400
-
-@user_controller.route('/users', methods=['POST'])
-def add_user():
-    data = request.get_json()
-    user = UserService.create_user(data)
-    if user:
-        return jsonify(user), 200 
-    else:
-        return jsonify(message='Error creating user'), 400
 
 @user_controller.route('/users/<user_id>', methods=['PUT'])
 @jwt_required()

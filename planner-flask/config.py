@@ -3,7 +3,7 @@ import os
 class Config:
     MONGODB_USERNAME = os.environ.get('MONGO_INITDB_ROOT_USERNAME') or 'admin'
     MONGODB_PASSWORD = os.environ.get('MONGO_INITDB_ROOT_PASSWORD') or 'adminsecret'
-    JWT_SECRET_KEY = os.environ.get() or 'jwtsecretkey'
+    JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY') or 'jwtsecretkey'
     DEBUG = False
 
 class DevelopmentConfig(Config):

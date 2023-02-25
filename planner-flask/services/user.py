@@ -4,17 +4,6 @@ from models.user import User
 class UserService:
 
     @staticmethod
-    def create_user(user_data):
-        """Create a new user in the database"""
-        try:
-            user = User(**user_data)
-            user.created_at = datetime.utcnow()
-            user.save()
-            return user
-        except Exception as e:
-            raise e
-
-    @staticmethod
     def get_all_users():
         """Retrieve all users from the database"""
         try:
@@ -31,7 +20,7 @@ class UserService:
             raise e
 
     @staticmethod
-    def get_user_by_emial(user_emial):
+    def get_user_by_email(user_emial):
         """Retrieve a specific user by ID"""
         try:
             return User.objects.get(email=user_emial)
