@@ -9,7 +9,12 @@ services:
       - "5000:5000"
     depends_on:
       - mongodb
-
+  react-app:
+      build: 
+        context: .
+        dockerfile: Dockerfile-react
+      ports:
+        - "80:80"
   mongodb:
     image: mongo:latest
     container_name: party-pp-mongodb
