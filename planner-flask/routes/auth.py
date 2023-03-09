@@ -35,8 +35,9 @@ def signup():
 
     # Save the new user to the database
     new_user.save()
+    access_token = create_access_token(identity=new_user.email)
 
-    return jsonify({'message': 'User created successfully', "userData": new_user}), 201
+    return jsonify({'access_token': access_token, 'message': 'User created successfully', "userData": new_user}), 201
 
 # Create a login endpoint
 @auth_controller.route('/login', methods=['POST'])
@@ -51,4 +52,4 @@ def login():
 
     # Create a JWT token for the user
     access_token = create_access_token(identity=user.email)
-    return jsonify({'access_token': access_token}), 200
+    return jsonify({'access_token': access_token, 'userData': user}), 200
