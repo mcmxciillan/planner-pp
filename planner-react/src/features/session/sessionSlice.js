@@ -1,13 +1,13 @@
 /**
-@fileoverview This file exports a Redux slice called sessionSlice that contains the initial state of the user session and its reducers to update it.
-It also exports several selectors to retrieve specific pieces of data from the state.
-This file uses createSlice function from @reduxjs/toolkit package to generate the slice.
-The sessionSlice object contains four reducers, named logUserIn, logUserOut, setJWT, and clearJWT, which modify the user session state in response to dispatched actions.
-The selectUserLoggedIn, selectJWT, and selectUser functions are selectors that return specific pieces of data from the session state.
-The logUserIn reducer sets the session state to indicate that a user is logged in and stores the user data in local storage.
-The logUserOut reducer clears the user data from the session state and local storage.
-The setJWT reducer sets the JWT in the session state and stores it in local storage.
-The clearJWT reducer clears the JWT from the session state and local storage.
+* @fileoverview This file exports a Redux slice called sessionSlice that contains the initial state of the user session and its reducers to update it.
+* It also exports several selectors to retrieve specific pieces of data from the state.
+* This file uses createSlice function from @reduxjs/toolkit package to generate the slice.
+* The sessionSlice object contains four reducers, named logUserIn, logUserOut, setJWT, and clearJWT, which modify the user session state in response to dispatched actions.
+* The selectUserLoggedIn, selectJWT, and selectUser functions are selectors that return specific pieces of data from the session state.
+* The logUserIn reducer sets the session state to indicate that a user is logged in and stores the user data in local storage.
+* The logUserOut reducer clears the user data from the session state and local storage.
+* The setJWT reducer sets the JWT in the session state and stores it in local storage.
+* The clearJWT reducer clears the JWT from the session state and local storage.
 */
 import { createSlice } from '@reduxjs/toolkit'
 

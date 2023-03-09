@@ -1,3 +1,11 @@
+/**
+* The SignUpForm component is responsible for rendering a form that allows the user to sign up for the application
+* by making a POST request to the server with the provided first name, last name, email, and password. It uses the
+* useForm hook from react-hook-form to manage form state and validation. If the sign up is successful, it dispatches
+* the logUserIn and setJWT actions from the sessionSlice of the Redux store and navigates the user to the home
+* page with their user ID in the URL. If the sign up is unsuccessful, it displays an error message to the user.
+* @returns {JSX.Element} - A form element that allows the user to sign up for the application.
+*/
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";

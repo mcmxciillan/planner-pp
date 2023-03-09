@@ -16,7 +16,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route exact path="/" element={userLoggedIn ? <HomePage/> : <LandingPage/>}/>
+        <Route exact path="/" element={userLoggedIn ? <HomePage/> : <LandingPage/>}/>{/* Need to figure out how to pass the ID into the home page */}
         <Route exact path="/signup" element={<SignUpPage/>} />
         <Route exact path="/login" element={<LogInPage/>} />
         <Route exact path="/home/:userId" element={<HomePage/>} />
