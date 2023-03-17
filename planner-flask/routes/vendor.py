@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required
 from services.vendor import VendorService
+from services.user import UserService
 
 vendor_controller = Blueprint('vendor_controller', __name__)
 
@@ -11,7 +12,10 @@ def create_vendor():
     data = request.get_json()
     vendor = VendorService.create_vendor(data)
     if vendor:
-        return jsonify(vendor), 201
+        if UserService.add_vendor_role(data.operators[0]._id):
+            return jsonify(vendor), 201
+        else:
+            return jsonify(message='Error adding vendor status to user'), 400
     else:
         return jsonify(message='Error creating vendor'), 400
 

@@ -183,3 +183,4 @@ planner-react/.env.test.local
 planner-react/npm-debug.log*
 planner-react/yarn-debug.log*
 planner-react/yarn-error.log*
+node_modules

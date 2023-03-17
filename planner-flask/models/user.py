@@ -15,6 +15,8 @@ class User(db.Document):
     password (str): The hashed password of the user.
     events (List[ObjectId]): A list of events that the user is associated with.
     roles (List[ObjectId]): A list of roles that the user has.
+    ratings: a list field containing ReferenceFields to Rating documents.
+    events: a list field containing ReferenceFields to Event documents.
     createdAt (datetime): The date and time when the user was created.
     updatedAt (datetime): The date and time when the user was last updated.
     """
@@ -24,5 +26,7 @@ class User(db.Document):
     password = db.StringField(required=True)
     events = db.ListField(db.ReferenceField(Event))
     roles = db.ListField(db.ReferenceField(Role))
+    ratings = db.ListField(db.ReferenceField('Rating'))
+    events = db.ListField(db.ReferenceField('Event'))
     createdAt = db.DateTimeField(default=datetime.utcnow)
     updatedAt = db.DateTimeField(default=datetime.utcnow)

@@ -29,6 +29,8 @@ def signup():
         email=email,
         password=hashed_password,
         roles=["User"],
+        ratings=[],
+        events=[],
         createdAt=datetime.utcnow(),
         updatedAt=datetime.utcnow()
     )

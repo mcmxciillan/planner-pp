@@ -52,7 +52,12 @@ class UserService:
 
     @staticmethod
     def add_vendor_role(user_id):
-        """Sign up a user to be a vendor on the platform."""
-        user = User.objects.get(_id=user_id)
-        user.roles.append("Vendor")
-        user.save()
+        try:
+            """Sign up a user to be a vendor on the platform."""
+            user = User.objects.get(_id=user_id)
+            user.roles.append("Vendor")
+            user.save()
+            return True
+        except Exception as ex:
+            print("Error adding vendor status to user ID: {}, Error: {}".format(user_id, ex))
+            return False

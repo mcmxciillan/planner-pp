@@ -1,9 +1,11 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { selectUser } from '../session/sessionSlice';
 
 export default function Home() {
-
+// We need to do a check for user roles and render content accordingly.
+// Currently we are assuming the user is not a vendor, just a regular user
+// We need to render vendor home page and functionalities
     const dispatch = useDispatch();
     const user = useSelector(selectUser);
     const { userId } = useParams()
@@ -12,6 +14,10 @@ export default function Home() {
     return (
         <div>
             <p>{userId}</p>
+            <ul>
+                <li><Link to="/events">Create Event</Link></li>
+                <li><Link to={`/events/${userId}`}>My Events</Link></li>
+            </ul>
         </div>
     );
 }

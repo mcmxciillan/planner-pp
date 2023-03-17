@@ -2,8 +2,8 @@
 * The SignUpForm component is responsible for rendering a form that allows the user to sign up for the application
 * by making a POST request to the server with the provided first name, last name, email, and password. It uses the
 * useForm hook from react-hook-form to manage form state and validation. If the sign up is successful, it dispatches
-* the logUserIn and setJWT actions from the sessionSlice of the Redux store and navigates the user to the home
-* page with their user ID in the URL. If the sign up is unsuccessful, it displays an error message to the user.
+* the logUserIn and setJWT actions from the sessionSlice of the Redux store and navigates the user to the vendor signup
+* page. If the sign up is unsuccessful, it displays an error message to the user.
 * @returns {JSX.Element} - A form element that allows the user to sign up for the application.
 */
 import { useForm } from "react-hook-form";
@@ -26,10 +26,9 @@ export default function SignUpForm() {
         })
         .then((response) => {
             if (response.status === 201) {
-                const userId = response.data.userData._id;
                 dispatch(logUserIn(response.data.userData))
                 dispatch(setJWT(response.data.access_token))
-                navigate(`/home/${userId}`);
+                navigate(`/vendorSignup`);
             }
         })
         .catch((error) => {
@@ -60,16 +59,20 @@ export default function SignUpForm() {
 
             <label>
                 Password
-                <input {...register("password", { required: true, minLength: 8 })} />
+                <input {...register("password", { 
+                    required: true, 
+                    minLength: 8 })} 
+                    type="password" />
             </label>
             {errors.password && <span>This field is required and must be at least 8 characters</span>}
 
             <label>
                 Password Confirmation
                 <input {...register("passwordConfirmation", {
-                    required: true, 
+                    required: true,
                     validate: value => value === watch("password")
                 })}
+                type="password" 
                 />
             </label>
             {errors.passwordConfirmation && <span>Passwords do not match</span>}
