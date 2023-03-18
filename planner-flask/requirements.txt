@@ -9,3 +9,4 @@ flask_restful
 flask_marshmallow
 marshmallow-mongoengine
 document
+pymongo

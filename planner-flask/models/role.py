@@ -7,4 +7,4 @@ class Role(db.Document):
     Attributes:
     name (str): The name of the role. Can either be 'User', 'Vendor', or 'Admin'.
     """
-    name = db.StringField(required=True)
+    name = db.StringField(primary_key=True, required=True)

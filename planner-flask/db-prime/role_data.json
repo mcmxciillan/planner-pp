@@ -1,0 +1,5 @@
+[  
+    {"_id": "Vendor", "name": "Vendor"},  
+    {"_id": "User", "name": "User"},  
+    {"_id": "Admin", "name": "Admin"}
+]

@@ -1,5 +1,6 @@
 from datetime import datetime
 from models.user import User
+from models.role import Role
 
 class UserService:
 
@@ -54,8 +55,9 @@ class UserService:
     def add_vendor_role(user_id):
         try:
             """Sign up a user to be a vendor on the platform."""
-            user = User.objects.get(_id=user_id)
-            user.roles.append("Vendor")
+            user = User.objects.get(id=user_id)
+            vendor_role = Role.objects.get(name="Vendor")
+            user.roles.append(vendor_role)
             user.save()
             return True
         except Exception as ex:

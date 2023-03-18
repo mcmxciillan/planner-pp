@@ -8,7 +8,6 @@ class Address(db.EmbeddedDocument):
     """
     street = db.StringField(required=True)
     zipcode = db.StringField(required=True)
-    state = db.StringField(required=True)
 
 class Event(db.Document):
     """

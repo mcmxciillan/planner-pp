@@ -26,7 +26,6 @@ class Vendor(db.Document):
     name: a required string field representing the name of the vendor.
     address: a required string field representing the physical street address of the vendor.
     zipcode: string zipcode
-    state: string state
     vendorType: a list field containing string fields representing the types of services the vendor provides.
     services: a list field containing embedded documents of the Service class.
     ratings: a list field containing ReferenceFields to Rating documents.
@@ -40,7 +39,6 @@ class Vendor(db.Document):
     name = db.StringField(required=True)
     address = db.StringField(required=True)
     zipcode = db.StringField(required=True)
-    state = db.StringField(required=True)
     vendorType = db.StringField(required=True)
     services = db.ListField(db.EmbeddedDocumentField('Service'))
     ratings = db.ListField(db.ReferenceField('Rating'))

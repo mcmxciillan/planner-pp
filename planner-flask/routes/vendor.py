@@ -11,8 +11,9 @@ def create_vendor():
     """Create a new Vendor"""
     data = request.get_json()
     vendor = VendorService.create_vendor(data)
+    print(data["operators"][0]["_id"])
     if vendor:
-        if UserService.add_vendor_role(data.operators[0]._id):
+        if UserService.add_vendor_role(data["operators"][0]["_id"]):
             return jsonify(vendor), 201
         else:
             return jsonify(message='Error adding vendor status to user'), 400

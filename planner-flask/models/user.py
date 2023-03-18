@@ -1,6 +1,7 @@
 from datetime import datetime
 from .role import Role
 from .event import Event
+from .rating import Rating
 from database import db
 
 class User(db.Document):
@@ -26,7 +27,6 @@ class User(db.Document):
     password = db.StringField(required=True)
     events = db.ListField(db.ReferenceField(Event))
     roles = db.ListField(db.ReferenceField(Role))
-    ratings = db.ListField(db.ReferenceField('Rating'))
-    events = db.ListField(db.ReferenceField('Event'))
+    ratings = db.ListField(db.ReferenceField(Rating))
     createdAt = db.DateTimeField(default=datetime.utcnow)
     updatedAt = db.DateTimeField(default=datetime.utcnow)
