@@ -28,21 +28,16 @@ class Vendor(db.Document):
     zipcode: string zipcode
     vendorType: a list field containing string fields representing the types of services the vendor provides.
     services: a list field containing embedded documents of the Service class.
-    ratings: a list field containing ReferenceFields to Rating documents.
-    events: a list field containing ReferenceFields to Event documents.
-    operators: a list field containing ReferenceFields to User documents representing the users who have access operate under this Vendor profile
+    rating: a Float field containing the rating of the Vendor (0.5-5.0)
+    operator_ids: a list field containing ObjectId's referencing User documents representing the users who have access operate under this Vendor profile
     createdAt: a DateTimeField set to the current UTC time on the creation of a new vendor document.
-    updatedAt: a DateTimeField set to the current UTC time on any updates made to the vendor document.
-    This file also creates an instance of MongoEngine, which is necessary to initialize the connection to the MongoDB database.
     """
     email = db.StringField(required=True, unique=True)
     name = db.StringField(required=True)
     address = db.StringField(required=True)
     zipcode = db.StringField(required=True)
     vendorType = db.StringField(required=True)
-    services = db.ListField(db.EmbeddedDocumentField('Service'))
-    ratings = db.ListField(db.ReferenceField('Rating'))
-    events = db.ListField(db.ReferenceField('Event'))
-    operators = db.ListField(db.ReferenceField('User'))
+    services = db.ListField(db.EmbeddedDocumentField(Service))
+    rating = db.FloatField(min_value=0.5, max_value=5.0)
+    operator_ids = db.ListField(db.ObjectIdField())
     createdAt = db.DateTimeField(default=datetime.utcnow)
-    updatedAt = db.DateTimeField(default=datetime.utcnow)

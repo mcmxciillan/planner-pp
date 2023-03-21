@@ -33,14 +33,8 @@ class Event(db.Document):
     :type address: dict
     :param duration: Duration of the event
     :type duration: int
-    :param budget: Budget of the event
-    :type budget: int
-    :param attendees: Attendees of the event
-    :type attendees: List[ObjectId]
     :param created_at: Timestamp of when the event was created
     :type created_at: datetime
-    :param updated_at: Timestamp of when the event was last updated
-    :type updated_at: datetime
     """
     name = db.StringField(required=True)
     date = db.DateTimeField(required=True)
@@ -50,9 +44,6 @@ class Event(db.Document):
     vendors = db.ListField(db.ObjectIdField())
     start_date = db.DateTimeField(required=True)
     start_time = db.StringField(required=True)
-    address = db.EmbeddedDocumentField('Address')
-    duration = db.IntField(required=True)
-    budget = db.IntField()
-    attendees = db.ListField(db.ObjectIdField())
+    address = db.EmbeddedDocumentField(Address)
+    duration = db.IntField()
     created_at = db.DateTimeField(default=datetime.utcnow)
-    updated_at = db.DateTimeField(default=datetime.utcnow)

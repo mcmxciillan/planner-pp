@@ -10,14 +10,14 @@ class Payment(db.Document):
     :param date: The date and time the payment was made
     :type date: datetime
     :param user: The user that made the payment
-    :type user: ReferenceField(User)
+    :type user: ObjectIdField(User)
     :param vendor: The vendor that received the payment
-    :type vendor: ReferenceField(Vendor)
+    :type vendor: ObjectIdField(Vendor)
     :param event: The event the payment is for
-    :type event: ReferenceField(Event)
+    :type event: ObjectIdField(Event)
     """
-    amount = db.IntField(required=True)
+    user_id = db.ReferenceField(db.ObjectIdField(), required=True)
+    vendor_id = db.ReferenceField(db.ObjectIdField(), required=True)
+    event = db.ReferenceField(db.ObjectIdField(), required=True)
+    amount = db.FloatField(min_value=0.0, max_value=999999.99,required=True)
     date = db.DateTimeField(default=datetime.utcnow, required=True)
-    user = db.ReferenceField("User", required=True)
-    vendor = db.ReferenceField("Vendor", required=True)
-    event = db.ReferenceField("Event", required=True)
