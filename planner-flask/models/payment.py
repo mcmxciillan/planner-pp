@@ -16,8 +16,8 @@ class Payment(db.Document):
     :param event: The event the payment is for
     :type event: ObjectIdField(Event)
     """
-    user_id = db.ReferenceField(db.ObjectIdField(), required=True)
-    vendor_id = db.ReferenceField(db.ObjectIdField(), required=True)
-    event = db.ReferenceField(db.ObjectIdField(), required=True)
+    user_id = db.ObjectIdField(required=True)
+    vendor_id = db.ObjectIdField(required=True)
+    event = db.ObjectIdField(required=True)
     amount = db.FloatField(min_value=0.0, max_value=999999.99,required=True)
     date = db.DateTimeField(default=datetime.utcnow, required=True)

@@ -6,20 +6,24 @@ import SignUpPage from './features/signup/signup.page';
 import LogInPage from './features/login/login.page';
 import HomePage from './features/home/home.page';
 import { useSelector } from 'react-redux';
-import { selectUserLoggedIn } from './features/session/sessionSlice';
+import { selectUserLoggedIn } from './slices/sessionSlice';
+import { selectUser } from './slices/userSlice';
 import CreateEventPage from './features/event/createEvent.page';
 import EventsPage from './features/event/events.page';
 import VendorSignupPage from './features/signup/vendorSignup/vendorSignup.page';
+import Navbar from './components/navbar';
 
 
-function App() {
+export default function App() {
 
   const userLoggedIn = useSelector(selectUserLoggedIn)
+  const user = useSelector(selectUser)
   
   return (
     <Router>
+      <Navbar />
       <Routes>
-        <Route exact path="/" element={userLoggedIn ? <HomePage/> : <LandingPage/>}/>{/* Need to figure out how to pass the ID into the home page */}
+        <Route exact path="/" element={userLoggedIn ? <HomePage user={user}/> : <LandingPage/>}/>{/* Need to figure out how to pass the User ID into the home page URL*/}
         <Route exact path="/signup" element={<SignUpPage/>} />
         <Route exact path="/login" element={<LogInPage/>} />
         <Route exact path="/vendorSignup" element={<VendorSignupPage/>}/>
@@ -35,5 +39,3 @@ function App() {
   </Router>
   );
 }
-
-export default App;

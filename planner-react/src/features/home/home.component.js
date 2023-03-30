@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
-import { selectUser } from '../session/sessionSlice';
+import { selectUser } from '../../slices/userSlice';
 
 export default function Home() {
 // We need to do a check for user roles and render content accordingly.
@@ -14,6 +14,7 @@ export default function Home() {
     return (
         <div>
             <p>{userId}</p>
+            <p>Hello {user.firstName} {user.lastName}!</p>
             <ul>
                 <li><Link to="/events">Create Event</Link></li>
                 <li><Link to={`/events/${userId}`}>My Events</Link></li>

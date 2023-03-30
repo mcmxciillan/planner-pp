@@ -10,7 +10,7 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { logUserIn, setJWT } from '../session/sessionSlice'
+import { logUserIn, setJWT } from '../../slices/sessionSlice'
 
 export default function LogInForm() {
     const { register, handleSubmit, formState: { errors } } = useForm();

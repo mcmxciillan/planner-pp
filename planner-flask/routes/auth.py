@@ -29,10 +29,7 @@ def signup():
         email=email,
         password=hashed_password,
         roles=["User"],
-        ratings=[],
-        events=[],
-        createdAt=datetime.utcnow(),
-        updatedAt=datetime.utcnow()
+        createdAt=datetime.utcnow()
     )
 
     # Save the new user to the database
@@ -54,4 +51,6 @@ def login():
 
     # Create a JWT token for the user
     access_token = create_access_token(identity=user.email)
-    return jsonify({'access_token': access_token, 'userData': user}), 200
+    response = jsonify({'access_token': access_token, 'userData': user})
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response

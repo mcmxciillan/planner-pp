@@ -21,10 +21,10 @@ class UserService:
             raise e
 
     @staticmethod
-    def get_user_by_email(user_emial):
+    def get_user_by_email(user_email):
         """Retrieve a specific user by ID"""
         try:
-            return User.objects.get(email=user_emial)
+            return User.objects.get(email=user_email)
         except Exception as e:
             raise e
 

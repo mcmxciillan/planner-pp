@@ -18,9 +18,9 @@ class Rating(db.Document):
     :param created_at: Timestamp of when the rating was created
     :type created_at: datetime
     """
-    user_id = db.ReferenceField(db.ObjectIdField(), required=True)
-    vendor_id = db.ReferenceField(db.ObjectIdField(), required=True)
-    event_id = db.ReferenceField(db.ObjectIdField(), required=True)
-    rating = db.FloatField(required=True, min_value=0.5, max_value=5.0, required=True)
+    user_id = db.ObjectIdField(required=True)
+    vendor_id = db.ObjectIdField(required=True)
+    event_id = db.ObjectIdField(required=True)
+    rating = db.FloatField(min_value=0.5, max_value=5.0, required=True)
     comment = db.StringField()
     created_at = db.DateTimeField(default=datetime.utcnow)

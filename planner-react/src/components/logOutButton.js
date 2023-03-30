@@ -6,7 +6,7 @@
 */
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
-import { clearJWT, logUserOut } from "../features/session/sessionSlice";
+import { clearJWT, logUserOut } from "../slices/sessionSlice";
 export default function LogOutButton() {
 
     const navigate = useNavigate();

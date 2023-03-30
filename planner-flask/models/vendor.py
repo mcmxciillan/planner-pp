@@ -39,5 +39,6 @@ class Vendor(db.Document):
     vendorType = db.StringField(required=True)
     services = db.ListField(db.EmbeddedDocumentField(Service))
     rating = db.FloatField(min_value=0.5, max_value=5.0)
+    rating_count = db.IntField(default=0)
     operator_ids = db.ListField(db.ObjectIdField())
     createdAt = db.DateTimeField(default=datetime.utcnow)
