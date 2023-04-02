@@ -18,6 +18,7 @@ export default function App() {
 
   const userLoggedIn = useSelector(selectUserLoggedIn)
   const user = useSelector(selectUser)
+  console.log("User logged in?: ", userLoggedIn)
   
   return (
     <Router>

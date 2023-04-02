@@ -1,4 +1,4 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { selectUser } from '../../slices/userSlice';
 
@@ -6,7 +6,6 @@ export default function Home() {
 // We need to do a check for user roles and render content accordingly.
 // Currently we are assuming the user is not a vendor, just a regular user
 // We need to render vendor home page and functionalities
-    const dispatch = useDispatch();
     const user = useSelector(selectUser);
     const { userId } = useParams()
     console.log(user)

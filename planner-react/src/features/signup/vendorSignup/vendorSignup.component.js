@@ -12,6 +12,7 @@ export default function VendorSignupForm() {
     const navigate = useNavigate();
     const user = useSelector(selectUser)
     const jwtToken = useSelector(selectJWT)
+    console.log(user)
 
     const onYesClick = () => {
         setShowVendorForm(true);

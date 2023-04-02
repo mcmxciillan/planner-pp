@@ -11,6 +11,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { logUserIn, setJWT } from '../../slices/sessionSlice'
+import { setUser } from "../../slices/userSlice";
 
 export default function SignUpForm() {
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
@@ -26,9 +27,11 @@ export default function SignUpForm() {
         })
         .then((response) => {
             if (response.status === 201) {
+                console.log(response.data)
                 dispatch(logUserIn(response.data.userData))
                 dispatch(setJWT(response.data.access_token))
-                navigate(`/vendorSignup`);
+                dispatch(setUser(response.data.userData))
+                navigate(`/home/${response.data.userData._id.$oid}`);
             }
         })
         .catch((error) => {
