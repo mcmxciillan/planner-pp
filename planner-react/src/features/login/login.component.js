@@ -11,6 +11,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logUserIn, setJWT } from '../../slices/sessionSlice'
+import { setUser } from '../../slices/userSlice'
 
 export default function LogInForm() {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -26,6 +27,7 @@ export default function LogInForm() {
                 const userId = response.data.userData._id.$oid
                 dispatch(logUserIn(response.data.userData))
                 dispatch(setJWT(response.data.access_token))
+                dispatch(setUser(response.data.userData))
                 navigate(`/home/${userId}`);
             } else {
                 errors.loginError = 'Incorrect email or password'

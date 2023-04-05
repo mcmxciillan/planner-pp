@@ -1,13 +1,6 @@
 from datetime import datetime
 from database import db
-
-class Address(db.EmbeddedDocument):
-    """
-    The Address embedded document class for the Event model.
-    This class defines the fields for the address of an event.
-    """
-    street = db.StringField(required=True)
-    zipcode = db.StringField(required=True)
+from address import Address
 
 class Event(db.Document):
     """
@@ -17,8 +10,6 @@ class Event(db.Document):
     :type name: str
     :param date: Date of the event
     :type date: datetime
-    :param location: Location of the event
-    :type location: str
     :param description: Description of the event
     :type description: str
     :param organizers: Organizers of the event
@@ -38,7 +29,6 @@ class Event(db.Document):
     """
     name = db.StringField(required=True)
     date = db.DateTimeField(required=True)
-    location = db.StringField(required=True)
     description = db.StringField(required=True)
     organizers = db.ListField(db.ObjectIdField())
     vendors = db.ListField(db.ObjectIdField())

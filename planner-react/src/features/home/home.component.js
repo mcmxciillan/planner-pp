@@ -9,7 +9,6 @@ export default function Home() {
     const user = useSelector(selectUser);
     const { userId } = useParams()
     console.log(user)
-
     return (
         <div>
             <p>{userId}</p>

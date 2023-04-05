@@ -1,5 +1,6 @@
 from datetime import datetime
 from database import db
+from address import Address
 
 class Service(db.EmbeddedDocument):
     """
@@ -34,7 +35,7 @@ class Vendor(db.Document):
     """
     email = db.StringField(required=True, unique=True)
     name = db.StringField(required=True)
-    address = db.StringField(required=True)
+    address = db.EmbeddedDocumentField(Address)
     zipcode = db.StringField(required=True)
     vendorType = db.StringField(required=True)
     services = db.ListField(db.EmbeddedDocumentField(Service))
