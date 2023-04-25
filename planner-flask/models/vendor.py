@@ -1,6 +1,6 @@
 from datetime import datetime
 from database import db
-from address import Address
+from .address import Address
 
 class Service(db.EmbeddedDocument):
     """
@@ -36,10 +36,9 @@ class Vendor(db.Document):
     email = db.StringField(required=True, unique=True)
     name = db.StringField(required=True)
     address = db.EmbeddedDocumentField(Address)
-    zipcode = db.StringField(required=True)
     vendorType = db.StringField(required=True)
-    services = db.ListField(db.EmbeddedDocumentField(Service))
-    rating = db.FloatField(min_value=0.5, max_value=5.0)
+    services = db.ListField(db.EmbeddedDocumentField(Service), default=[])
+    rating = db.FloatField(min_value=0.5, max_value=5.0, default=3.0)
     rating_count = db.IntField(default=0)
     operator_ids = db.ListField(db.ObjectIdField())
     createdAt = db.DateTimeField(default=datetime.utcnow)

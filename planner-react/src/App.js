@@ -29,7 +29,7 @@ export default function App() {
         <Route exact path="/vendorSignup" element={<VendorSignupPage/>}/>
         <Route exact path="/home/:userId" element={<HomePage/>} />
         <Route exact path="/events" element={<CreateEventPage/>} />
-        <Route exact path="/events/:userId" element={<EventsPage/>} />
+        <Route exact path="/events/:id" element={<EventsPage/>} />
         <Route exact path="/events/:userId/messages" element={<></>} />
         <Route exact path="/events/:userId/messages/:threadId" element={<></>} />
         <Route exact path="/event/:eventId" element={<></>} />

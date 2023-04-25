@@ -20,7 +20,6 @@ def get_rating(rating_id):
     return jsonify(rating.to_dict()), 200
 
 @rating_controller.route('/rating', methods=['POST'])
-@jwt_required()
 def add_rating():
     data = request.get_json()
     rating = RatingService.create_rating(data)

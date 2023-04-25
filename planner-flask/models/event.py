@@ -1,6 +1,6 @@
 from datetime import datetime
 from database import db
-from address import Address
+from .address import Address
 
 class Event(db.Document):
     """

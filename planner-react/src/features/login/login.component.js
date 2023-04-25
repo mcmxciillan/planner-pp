@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logUserIn, setJWT } from '../../slices/sessionSlice'
 import { setUser } from '../../slices/userSlice'
+import { setVendor } from '../../slices/vendorSlice';
 
 export default function LogInForm() {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -19,15 +20,21 @@ export default function LogInForm() {
     const dispatch = useDispatch();
 
     const onSubmit = (data) => {
-        console.log(data)
         axios.post('http://localhost:5000/login', data)
-            .then((response) => {
+            .then(async (response) => {
             if (response.status === 200) {
-                console.log(response)
-                const userId = response.data.userData._id.$oid
-                dispatch(logUserIn(response.data.userData))
+                const userData = response.data.userData
+                const userId = userData._id.$oid
+                dispatch(logUserIn(userData))
+                dispatch(setUser(userData))
                 dispatch(setJWT(response.data.access_token))
-                dispatch(setUser(response.data.userData))
+                if (userData.roles.indexOf('Vendor') > 0) {
+                    console.log("User is a vendor. Fetching vendor data...")
+                    const vendorResponse = await fetch(`http://localhost:5000/vendor/${userId}`)
+                    const vendor = await vendorResponse.json()
+                    console.log("Vendor: ", vendor)
+                    dispatch(setVendor(vendor))
+                }
                 navigate(`/home/${userId}`);
             } else {
                 errors.loginError = 'Incorrect email or password'

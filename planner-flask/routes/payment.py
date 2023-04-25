@@ -13,7 +13,6 @@ def get_all_payments():
         return jsonify(message='Error fetching payments'), 400
 
 @payment_controller.route('/payments', methods=['POST'])
-@jwt_required()
 def create_payment():
     data = request.get_json()
     payment = PaymentService.add_payment(data)

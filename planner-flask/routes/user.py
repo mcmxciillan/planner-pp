@@ -13,7 +13,6 @@ def get_users():
         return jsonify(message='Error fetching users'), 400
 
 @user_controller.route('/user/<user_email>', methods=['GET'])
-@jwt_required()
 def get_user(user_email):
     user = UserService.get_user_by_email(user_email)
     if user:
@@ -22,7 +21,6 @@ def get_user(user_email):
         return jsonify(message='Error fetching user'), 400
 
 @user_controller.route('/users/<user_id>', methods=['PUT'])
-@jwt_required()
 def update_user(user_id):
     data = request.get_json()
     user = UserService.update_user(user_id, data)
@@ -40,7 +38,6 @@ def delete_user(user_id):
         return jsonify(message='Error deleting user'), 400
 
 @user_controller.route("/signup/vendor", methods=["POST"])
-@jwt_required()
 def signup_vendor():
     data = request.get_json()
     user_id = data.get("user_id")

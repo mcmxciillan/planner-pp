@@ -3,8 +3,9 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { selectJWT } from '../../../slices/sessionSlice';
-import { selectUser } from '../../../slices/userSlice';
-import { useSelector } from 'react-redux';
+import { addVendorRoleToUser, selectUser } from '../../../slices/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { setVendor } from '../../../slices/vendorSlice';
 
 export default function VendorSignupForm() {
     const [showVendorForm, setShowVendorForm] = useState(false);
@@ -12,6 +13,8 @@ export default function VendorSignupForm() {
     const navigate = useNavigate();
     const user = useSelector(selectUser)
     const jwtToken = useSelector(selectJWT)
+    const dispatch = useDispatch();
+
     console.log(user)
 
     const onYesClick = () => {
@@ -31,7 +34,7 @@ export default function VendorSignupForm() {
             address: data.address,
             zipcode: data.zipcode,
             vendorType: data.vendorType,
-            operators: [user]
+            operator_id: user._id
         }
         axios.post('http://localhost:5000/vendors/create', newVendorData, {
             headers: {
@@ -41,13 +44,15 @@ export default function VendorSignupForm() {
         })
         .then((response) => {
             if (response.status === 201) {
+                dispatch(setVendor(response.data))
+                dispatch(addVendorRoleToUser())
                 navigate(`/home/${user._id}`);
             }
         })
         .catch((error) => {
             console.error(error);
         })
-    };
+    }; 
 
     return (
         <>

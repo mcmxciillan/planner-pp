@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { clearJWT, logUserOut } from "../slices/sessionSlice";
 import { clearUser } from "../slices/userSlice";
+import { clearVendor } from "../slices/vendorSlice";
+
 export default function LogOutButton() {
 
     const navigate = useNavigate();
@@ -19,6 +21,7 @@ export default function LogOutButton() {
                 dispatch(clearJWT())
                 dispatch(logUserOut())
                 dispatch(clearUser())
+                dispatch(clearVendor())
                 navigate('/')
                 }}>{`Log Out`}</button>
         </div>

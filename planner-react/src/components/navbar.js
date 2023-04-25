@@ -7,7 +7,6 @@ import { selectUser } from '../slices/userSlice';
 export default function Navbar() {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const user = useSelector(selectUser);
-console.log(user ? "yes": "no")
     const toggleDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
     };
@@ -20,7 +19,7 @@ console.log(user ? "yes": "no")
             { user ? <ul className="navbar-links">
                 <li className="navbar-link"><Link to={user ? `/home/${user._id}` : `/`}>Home</Link></li>
                         <li className="navbar-link">
-                            {user ? <Link to="/vendorSignup">Vendor Signup</Link> : <></>}
+                        {user.roles.indexOf('Vendor') > 0 ? <></> : <Link to="/vendorSignup">Vendor Signup</Link>}
                         </li>
                 <li className="navbar-link"><LogOutButton /></li>
             </ul> : <></>}
@@ -34,7 +33,7 @@ console.log(user ? "yes": "no")
                             <Link to="/profile">Profile</Link>
                         </li>
                         <li className="navbar-dropdown-menu-item">
-                            {user ? <Link to="/vendorSignup">Vendor Signup</Link> : <></>}
+                            {user.roles.indexOf('Vendor') > 0 ? <></> : <Link to="/vendorSignup">Vendor Signup</Link>}
                         </li>
                         <li className="navbar-dropdown-menu-item">
                             {user ? <LogOutButton /> : <></>}

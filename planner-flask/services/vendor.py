@@ -1,7 +1,8 @@
 from flask import jsonify
 from models.vendor import Vendor
 from mongoengine import GeoPointField
-
+from models.address import Address
+from bson import ObjectId
 class VendorService:
 
     @staticmethod
@@ -11,13 +12,28 @@ class VendorService:
 
     @staticmethod
     def create_vendor(data):
-        vendor = Vendor(**data)
+        vendorData = {
+            "email": data["email"],
+            "name": data["name"],
+            "address": {"street": data["address"], "zipcode": data["zipcode"]},
+            "vendorType": data["vendorType"],
+            "services": [],
+            "operator_ids": [ObjectId(data['operator_id'])]
+        }
+        print("Vendor data", vendorData)
+        vendor = Vendor(**vendorData)
         vendor.save()
         return vendor
 
     @staticmethod
     def get_vendor(vendor_id):
         vendor = Vendor.objects.get(id=vendor_id)
+        print("Vendor found: ", vendor)
+        return vendor
+
+    @staticmethod
+    def get_vendor_by_operator_id(operator_id):
+        vendor = Vendor.objects.get(operator_ids=operator_id)
         return vendor
 
     @staticmethod

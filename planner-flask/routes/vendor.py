@@ -2,18 +2,19 @@ from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required
 from services.vendor import VendorService
 from services.user import UserService
+from bson import ObjectId
 
 vendor_controller = Blueprint('vendor_controller', __name__)
 
 @vendor_controller.route('/vendors/create', methods=['POST'])
-@jwt_required()
 def create_vendor():
     """Create a new Vendor"""
     data = request.get_json()
+    print(data)
     vendor = VendorService.create_vendor(data)
-    print(data["operators"][0]["_id"])
+    print(data["operator_id"])
     if vendor:
-        if UserService.add_vendor_role(data["operators"][0]["_id"]):
+        if UserService.add_vendor_role(ObjectId(data["operator_id"])):
             return jsonify(vendor), 201
         else:
             return jsonify(message='Error adding vendor status to user'), 400
@@ -29,17 +30,17 @@ def get_all_vendors():
     else:
         return jsonify(message='Error fetching vendors'), 400
 
-@vendor_controller.route('/vendor/<id>', methods=['GET'])
-def get_vendor(id):
-    """Retrieve a single vendor by id"""
-    vendor = VendorService.get_vendor(id)
+@vendor_controller.route('/vendor/<operator_id>', methods=['GET'])
+def get_vendor(operator_id):
+    """Retrieve a single vendor by an operator id"""
+    vendor = VendorService.get_vendor_by_operator_id(operator_id)
     if vendor:
         return jsonify(vendor), 200
     else:
         return jsonify(message='Error fetching vendor'), 400
+    
 
 @vendor_controller.route('/vendor/<id>', methods=['PUT'])
-@jwt_required()
 def update_vendor(id):
     """Update a single vendor by id"""
     data = request.get_json()
@@ -50,7 +51,6 @@ def update_vendor(id):
         return jsonify(message='Error updating vendor'), 400
 
 @vendor_controller.route('/vendors/<id>', methods=['DELETE'])
-@jwt_required()
 def delete_vendor(id):
     """Delete a single vendor by id"""
     vendor = VendorService.delete_vendor(id)

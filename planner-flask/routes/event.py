@@ -6,7 +6,6 @@ from services.event import EventService
 event_controller = Blueprint('event_controller', __name__)
 
 @event_controller.route('/events', methods=['POST'])
-@jwt_required()
 def create_event():
     data = request.get_json()
     event = EventService.add_event(data)
@@ -21,7 +20,6 @@ def get_events():
     return jsonify(events), 200
 
 @event_controller.route('/event/<event_id>', methods=['GET'])
-@jwt_required()
 def get_event(event_id):
     event = Event.objects(_id=event_id).first()
     if event:
@@ -30,7 +28,6 @@ def get_event(event_id):
         return jsonify(message='Error fetching event'), 400
 
 @event_controller.route('/event/<event_id>', methods=['PUT'])
-@jwt_required()
 def update_event(event_id):
     data = request.get_json()
     event = EventService.update_event(event_id, data)
@@ -40,7 +37,6 @@ def update_event(event_id):
         return jsonify(message='Error updating event'), 400
 
 @event_controller.route('/event/<event_id>', methods=['DELETE'])
-@jwt_required()
 def delete_event(event_id):
     event = EventService.delete_event(event_id)
     if event:
