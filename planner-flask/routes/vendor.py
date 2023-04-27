@@ -30,6 +30,14 @@ def get_all_vendors():
     else:
         return jsonify(message='Error fetching vendors'), 400
 
+@vendor_controller.route('/venue/<zipcode>')
+def get_venues_by_zipcode(zipcode):
+    venues = VendorService.get_venues_by_zipcode(zipcode=zipcode)
+    if venues:
+        return jsonify(venues), 200
+    else:
+        return jsonify(message='Error fetching venues'), 400
+
 @vendor_controller.route('/vendor/<operator_id>', methods=['GET'])
 def get_vendor(operator_id):
     """Retrieve a single vendor by an operator id"""

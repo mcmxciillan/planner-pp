@@ -24,6 +24,11 @@ class VendorService:
         vendor = Vendor(**vendorData)
         vendor.save()
         return vendor
+    
+    @staticmethod
+    def get_venues_by_zipcode(zipcode):
+        venues = Vendor.objects(vendorType='venue', address__zipcode=zipcode)
+        return venues
 
     @staticmethod
     def get_vendor(vendor_id):

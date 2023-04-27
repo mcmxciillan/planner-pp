@@ -16,8 +16,6 @@ class Event(db.Document):
     :type organizers: List[ObjectId]
     :param vendors: Vendors of the event
     :type vendors: List[ObjectId]
-    :param start_date: Start date of the event
-    :type start_date: datetime
     :param start_time: Start time of the event
     :type start_time: str
     :param address: Address of the event
@@ -32,7 +30,6 @@ class Event(db.Document):
     description = db.StringField(required=True)
     organizers = db.ListField(db.ObjectIdField())
     vendors = db.ListField(db.ObjectIdField())
-    start_date = db.DateTimeField(required=True)
     start_time = db.StringField(required=True)
     address = db.EmbeddedDocumentField(Address)
     duration = db.IntField()
