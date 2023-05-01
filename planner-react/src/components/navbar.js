@@ -7,22 +7,43 @@ import { selectUser } from '../slices/userSlice';
 export default function Navbar() {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const user = useSelector(selectUser);
+
+    function isUserLoggedIn() {
+        console.log(user)
+        return user._id !== null
+    }
+
+    function isVendor() {
+        return user.roles.indexOf('Vendor') > 0
+    }
     const toggleDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
     };
-
+    
     return (
         <nav className="navbar">
             <div className="navbar-logo">
                 {`{PP++}`}
             </div>
-            { user ? <ul className="navbar-links">
-                <li className="navbar-link"><Link to={user ? `/home/${user._id}` : `/`}>Home</Link></li>
-                        <li className="navbar-link">
-                        {user.roles.indexOf('Vendor') > 0 ? <></> : <Link to="/vendorSignup">Vendor Signup</Link>}
-                        </li>
-                <li className="navbar-link"><LogOutButton /></li>
-            </ul> : <></>}
+            { user && isUserLoggedIn() ? 
+                <ul className="navbar-links">
+                    <li className="navbar-link">
+                        <Link to={`/home/${user._id}`}>Home</Link>
+                    </li>
+                    <li className="navbar-link">
+                        {isVendor() ? <></> : <Link to="/vendorSignup">Vendor Signup</Link>}
+                    </li>
+                    <li className="navbar-link">
+                        {isVendor() ? <Link to="/vendor/services">My Services</Link> :<></>}
+                    </li>
+                    <li className="navbar-link">
+                        <Link to={'/messages'}>Messages</Link>
+                    </li>
+                    <li className="navbar-link">
+                        <LogOutButton />
+                    </li>
+                </ul> : <></>
+            }
             <div className="navbar-dropdown">
                 <button className="navbar-dropdown-toggle" onClick={toggleDropdown}>
                     <i className="fas fa-user"></i>
@@ -33,10 +54,10 @@ export default function Navbar() {
                             <Link to="/profile">Profile</Link>
                         </li>
                         <li className="navbar-dropdown-menu-item">
-                            {user.roles.indexOf('Vendor') > 0 ? <></> : <Link to="/vendorSignup">Vendor Signup</Link>}
+                            {isVendor ? <></> : <Link to="/vendorSignup">Vendor Signup</Link>}
                         </li>
                         <li className="navbar-dropdown-menu-item">
-                            {user ? <LogOutButton /> : <></>}
+                            {isUserLoggedIn() ? <LogOutButton /> : <></>}
                         </li>
                     </ul>
                 )}

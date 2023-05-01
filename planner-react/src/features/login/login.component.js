@@ -25,6 +25,7 @@ export default function LogInForm() {
             if (response.status === 200) {
                 const userData = response.data.userData
                 const userId = userData._id.$oid
+                console.log("Logging in user: ", userData)
                 dispatch(logUserIn(userData))
                 dispatch(setUser(userData))
                 dispatch(setJWT(response.data.access_token))
@@ -47,17 +48,17 @@ export default function LogInForm() {
     };
 
     return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-        {errors && <p>{errors.loginError}</p>}
-        <label>
-            Email:
-            <input type="email" {...register('email', { required: true })} />
-        </label>
-        <label>
-            Password:
-            <input type="password" {...register('password', { required: true })} />
-        </label>
-        <button type="submit">Log in</button>
-    </form>
+        <form onSubmit={handleSubmit(onSubmit)} className='my-2'>
+            
+            <div className="flex justify-center my-4">
+                <input type="email" className='p-2 w-4/5 w-100 border rounded-lg' placeholder='email@planner.com' {...register('email', { required: true })} />
+            </div>
+            <div className="flex justify-center my-4">
+                <input type="password" className='p-2 w-4/5 w-100 border rounded-lg' placeholder='password' {...register('password', { required: true })} />
+            </div>
+            <div className="flex justify-center">
+                <button className="border py-1 px-2 rounded-full mx-auto  w-1/4" type="submit">Log In</button>
+            </div>
+        </form>
     );
 }

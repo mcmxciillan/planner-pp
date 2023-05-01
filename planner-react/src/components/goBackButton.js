@@ -11,7 +11,7 @@ export default function GoBackButton() {
 
     return (
         <div>
-            <button onClick={() => navigate(-1)}>{`<`}</button>
+            <button onClick={() => navigate(-1)}>{`<- Go Back`}</button>
         </div>
     )
 }

@@ -41,47 +41,41 @@ export default function SignUpForm() {
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <label>
-                First Name
-                <input {...register("firstName", { required: true })} />
-            </label>
-            {errors.firstName && <span>This field is required</span>}
-
-            <label>
-                Last Name
-                <input {...register("lastName", { required: true })} />
-            </label>
-            {errors.lastName && <span>This field is required</span>}
-
-            <label>
-                Email
-                <input {...register("email", { required: true, pattern: /^\S+@\S+$/i })} />
-            </label>
-            {errors.email && <span>This field is required</span>}
-
-            <label>
-                Password
-                <input {...register("password", { 
-                    required: true, 
-                    minLength: 8 })} 
-                    type="password" />
-            </label>
-            {errors.password && <span>This field is required and must be at least 8 characters</span>}
-
-            <label>
-                Password Confirmation
-                <input {...register("passwordConfirmation", {
-                    required: true,
-                    validate: value => value === watch("password")
-                })}
-                type="password" 
-                />
-            </label>
-            {errors.passwordConfirmation && <span>Passwords do not match</span>}
+        <div className="vw-100">
+        <form onSubmit={handleSubmit(onSubmit)} className="my-2">
+            <div className="flex justify-center my-4">
+                <input className="p-2 w-4/5 border rounded-lg" placeholder="First Name" {...register("firstName", { required: true })} />
+                {errors.firstName && <span>This field is required</span>}
+            </div>
+            <div className="flex justify-center my-4">
+                    <input className="p-2 w-4/5 w-100 border rounded-lg" placeholder="Last Name" {...register("lastName", { required: true })} />
+                {errors.lastName && <span>This field is required</span>}
+            </div>
+            <div className="flex justify-center my-4">
+                    <input className="p-2 w-4/5 border rounded-lg" placeholder="Email" {...register("email", { required: true, pattern: /^\S+@\S+$/i })} />
+                {errors.email && <span>This field is required</span>}
+            </div>
+            <div className="flex justify-center my-4">
+                    <input className="p-2 w-4/5 border rounded-lg" placeholder="Password" {...register("password", {
+                        required: true,
+                        minLength: 8 })}
+                        type="password" />
+                {errors.password && <span>This field is required and must be at least 8 characters</span>}
+            </div>
+            <div className="flex justify-center my-4">
+                    <input className="p-2 w-4/5 border rounded-lg" placeholder="Confirm Password" {...register("passwordConfirmation", {
+                        required: true,
+                        validate: value => value === watch("password")
+                    })}
+                    type="password"
+                    />
+                {errors.passwordConfirmation && <span>Passwords do not match</span>}
+            </div>
             {errors.loginError && <span>Login Error. Try again</span>}
-
-            <button type="submit">Sign Up</button>
+            <div className="flex justify-center my-4">
+                <button className="border py-1 px-2 rounded-full mx-auto  w-1/4" type="submit">Sign Up</button>
+            </div>
         </form>
+        </div>
     );
 }

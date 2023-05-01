@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [],
+  content: [
+  ],
   theme: {
     extend: {
       colors: {
@@ -13,6 +14,7 @@ module.exports = {
       }
     },
   },
-  plugins: [],
+  plugins: [
+]
 }
 

@@ -1,21 +1,24 @@
 import Message from "./message.component";
-import { selectUser } from "../session/sessionSlice";
+import { selectEvents } from "../../slices/eventsSlice";
 import { useSelector } from "react-redux";
+import GoBackButton from "../../components/goBackButton";
 
 export default function MessagePage() {
 
-    const { events } = useSelector(selectUser)
-    const messages = events.map(event => event.message)
+    const events = useSelector(selectEvents)
+    console.log(events)
+    // const messages = events.map(event => event.message)
 
     // TODO: For each event a user has
         // Render a button link that takes you to the message thread
     return(
         <div>
-            <ul>
+            <GoBackButton />
+            {/* <ul>
                 {messages.map(message => (
-                    <Message/>
+                    <Message />
                 ))}
-            </ul>
+            </ul> */}
         </div>
     )
 }

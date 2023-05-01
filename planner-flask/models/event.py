@@ -20,7 +20,7 @@ class Event(db.Document):
     :type start_time: str
     :param address: Address of the event
     :type address: dict
-    :param duration: Duration of the event
+    :param duration: Duration of the event in minutes
     :type duration: int
     :param created_at: Timestamp of when the event was created
     :type created_at: datetime

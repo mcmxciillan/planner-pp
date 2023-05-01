@@ -67,8 +67,11 @@ def delete_vendor(id):
     else:
         return jsonify(message='Error deleting vendor'), 400
 
-@vendor_controller.route('/search', methods=['GET'])
-def search_vendor():
-    search_params = request.args.to_dict()
-    vendors = VendorService.search(search_params)
-    return jsonify(vendors)
+@vendor_controller.route('/search/types', methods=['POST'])
+def search_vendors_by_type():
+    types = request.json['types']
+    vendors_by_type = {}
+    for type in types:
+        vendors = VendorService.find_vendors_by_type(vendor_type=type)
+        vendors_by_type[type] = vendors
+    return jsonify(vendors_by_type)

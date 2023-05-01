@@ -6,6 +6,7 @@ import { selectJWT } from '../../../slices/sessionSlice';
 import { addVendorRoleToUser, selectUser } from '../../../slices/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { setVendor } from '../../../slices/vendorSlice';
+import GoBackButton from '../../../components/goBackButton';
 
 export default function VendorSignupForm() {
     const [showVendorForm, setShowVendorForm] = useState(false);
@@ -15,18 +16,16 @@ export default function VendorSignupForm() {
     const jwtToken = useSelector(selectJWT)
     const dispatch = useDispatch();
 
-    console.log(user)
 
     const onYesClick = () => {
         setShowVendorForm(true);
     }
 
     const onNoClick = () => {
-        navigate(`/home/${user._id}`)
+        navigate(-1)
     }
 
     const handleVendorFormSubmit = (data) => {
-        console.log(data)
         // Handle submitting vendor form data here
         const newVendorData = {
             name: data.name,
@@ -34,8 +33,9 @@ export default function VendorSignupForm() {
             address: data.address,
             zipcode: data.zipcode,
             vendorType: data.vendorType,
-            operator_id: user._id
+            operator_id: user.id
         }
+        console.log(newVendorData)
         axios.post('http://localhost:5000/vendors/create', newVendorData, {
             headers: {
                 Authorization: `Bearer ${jwtToken}`,
@@ -46,16 +46,18 @@ export default function VendorSignupForm() {
             if (response.status === 201) {
                 dispatch(setVendor(response.data))
                 dispatch(addVendorRoleToUser())
-                navigate(`/home/${user._id}`);
+                navigate(`/vendor/services`);
             }
         })
         .catch((error) => {
             console.error(error);
+            errors.postError = error;
         })
     }; 
 
     return (
         <>
+        <GoBackButton />
             {!showVendorForm && (
                 <div>
                     <p>Do you want to sign up as a vendor?</p>
@@ -121,6 +123,7 @@ export default function VendorSignupForm() {
                             Save
                         </button>
                     </div>
+                    {errors.postError && <div className='text-red-600'>{errors.postError}</div>}
                 </form>
             )}
         </>

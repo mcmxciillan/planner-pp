@@ -2,13 +2,26 @@ import { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
-import { setWhere } from '../../slices/eventSlice'
+// import { setWhere } from '../../slices/newEventSlice'
+import { setWhere } from '../../../slices/newEventSlice';
+import GoBackButton from '../../../components/goBackButton';
 
 export default function WhereForm() {
     const { register, handleSubmit, formState, watch } = useForm();
     const [venues, setVenues] = useState([]);
-    const onSubmit = (data) => console.log(data);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
+    const onSubmit = (data) => {
+        console.log(data)
+        if (data.hostingOption === "myself") {
+            dispatch(setWhere({address: data.streetAddress, zipcode: data.zipcode}))
+            navigate(-1)
+        } else {
+            console.log("Searching for venues instead")
+            navigate(-1)
+        }
+    }
     const hostingOption = watch("hostingOption");
 
     const handleVenueSelect = (venue) => {
@@ -37,46 +50,34 @@ export default function WhereForm() {
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
         <div>
-            <input type="radio" id="host-myself" value="myself" {...register("hostingOption")} />
-            <label htmlFor="host-myself">Host it myself</label>
-            {hostingOption === "myself" && (
-            <>
+            <GoBackButton/>
+            <form onSubmit={handleSubmit(onSubmit)} className='my-4'>
+                <p className="text-center">Where is this event going to be?</p>
                 <div>
-                <label htmlFor="streetAddress">Street Address</label>
-                <input type="text" id="streetAddress" {...register("streetAddress")} />
+                    <div className="flex justify-center my-4">
+                        <input type="radio" id="host-myself" value="myself" {...register("hostingOption")} />
+                        <label className='mx-2' htmlFor="host-myself">Host it myself</label>
+                    </div>
+                    {hostingOption === "myself" && (
+                        <>
+                            <div className="flex justify-center my-4">
+                                <input type="text" className='p-2 w-4/5 w-100 border rounded-lg' placeholder='Street Address' {...register("streetAddress")} />
+                            </div>
+                            <div className="flex justify-center my-4">
+                                <input type="text" className='p-2 w-4/5 w-100 border rounded-lg' placeholder='Zip Code' {...register("zipcode")} />
+                            </div>
+                        </>
+                    )}
                 </div>
-                <div>
-                <label htmlFor="zipcode">Zipcode</label>
-                <input type="text" id="zipcode" {...register("zipcode")} />
+                <div className="flex justify-center my-4">
+                    <input type="radio" id="host-venue" value="venue" {...register("hostingOption")} />
+                    <label className='mx-2' htmlFor="host-venue">Host at a venue</label>
                 </div>
-            </>
-            )}
+                <div className="flex justify-center">
+                    <button className="border py-1 px-2 rounded-full mx-auto w-1/4" type="submit">All done</button>
+                </div>
+            </form>
         </div>
-        <div>
-            <input type="radio" id="host-venue" value="venue" {...register("hostingOption")} />
-            <label htmlFor="host-venue">Host at a venue</label>
-            {hostingOption === "venue" && (
-            <div>
-                <label htmlFor="venueZipcode">Zipcode</label>
-                <input type="text" id="venueZipcode" {...register("venueZipcode")} onBlur={(e) => handleVenueSearch(e.target.value)} />
-                {venues.length > 0 && (
-                <div>
-                    <h2>Venues</h2>
-                    {venues.map((venue) => (
-                    <button type="button" key={venue.id} onClick={() => handleVenueSelect(venue)}>
-                        <div>{venue.name}</div>
-                        <div>{venue.address}</div>
-                        <div>{venue.price}</div>
-                    </button>
-                    ))}
-                </div>
-                )}
-            </div>
-            )}
-        </div>
-        <button type="submit" disabled={formState.isSubmitting}>Submit</button>
-        </form>
     );
 }

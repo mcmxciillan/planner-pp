@@ -1,7 +1,8 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
-import { setWhy } from '../../slices/eventSlice'
+import { setWhy } from "../../../slices/newEventSlice";
+import GoBackButton from "../../../components/goBackButton";
 
 export default function WhyForm() {
     const { register, handleSubmit } = useForm();
@@ -10,17 +11,15 @@ export default function WhyForm() {
 
     const onSubmit = (data) => {
         console.log(data)
-        dispatch(setWhy(data.description))
+        navigate(-1)
+        // dispatch(setWhy(data.description))
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <label>
-                Description
-                <input {...register("description", { required: true })} />
-            </label>
-
-            <button type="submit">All done</button>
-        </form>
+        <div>
+            <GoBackButton/>
+            <p>Analytics page</p>
+            <p>...under construction</p>
+        </div>
     );
 }

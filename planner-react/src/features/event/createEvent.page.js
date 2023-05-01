@@ -10,7 +10,7 @@ export default function CreateEventPage() {
     return(
         <div>
             <GoBackButton />
-            <p>Answer the...</p>
+            <p className="text-center font-bold">Answer the...</p>
             <WhatButton />
             <WhereButton />
             <WhoButton />

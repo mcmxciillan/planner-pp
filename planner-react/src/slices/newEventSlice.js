@@ -1,19 +1,30 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-export const eventSlice = createSlice({
-    name: 'event',
+export const newEventSlice = createSlice({
+    name: 'newEvent',
     initialState: {
-        event: null,
+        event: {
+            name: null,
+            date: null,
+            description: null,
+            organizers: null,
+            vendors: null,
+            startTime: null,
+            address: null,
+            duration: null
+        },
     },
     reducers: {
         setWhat: (state, action) => {
             const what = action.payload;
             console.log("Setting What: ", what)
-            state.event.name = what
+            state.event.name = what.name
+            state.event.description = what.description
         },
         setWhere: (state, action) => {
             const where = action.payload;
             console.log("Setting Where: ", where)
+            state.event.address = {street: where.address, zipcode: where.zipcode}
         },
         setWho: (state, action) => {
             const who = action.payload;
@@ -24,6 +35,7 @@ export const eventSlice = createSlice({
             console.log(when)
         },
         setWhy: (state, action) => {
+            // Analytics info
             const why = action.payload;
             console.log("Setting Why: ", why)
             state.event.description = why
@@ -49,6 +61,6 @@ export const eventSlice = createSlice({
     }
 })
 
-export const { setWhat, setWhere, setWho, setWhen, setWhy, setEvent, clearEvent } = eventSlice.actions
-export const selectEvent = (state) => state.event.event
-export default eventSlice.reducer
+export const { setWhat, setWhere, setWho, setWhen, setWhy, setEvent, clearEvent } = newEventSlice.actions
+export const selectEvent = (state) => state.newEvent.newEvent
+export default newEventSlice.reducer

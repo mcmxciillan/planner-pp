@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import GoBackButton from "../../components/goBackButton";
 
-export default function EventsPage() {
-    const { userId } = useParams()
+export default function VendorEventsPage() {
+    const { vendorId } = useParams()
 
     return(
         <div>

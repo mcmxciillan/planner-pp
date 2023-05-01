@@ -7,6 +7,16 @@ class EventService:
         return Event.objects()
     
     @staticmethod
+    def get_events_by_organizer_id(organizer_id):
+        ''' TODO: Need to return only those events that havent occured '''
+        return Event.objects(organizers=organizer_id)
+    
+    @staticmethod
+    def get_events_by_vendor_id(vendor_id):
+        ''' TODO: Need to return only those events that havent occured '''
+        return Event.objects(vendors=vendor_id)
+    
+    @staticmethod
     def get_event_by_id(event_id: str):
         return Event.objects(_id=event_id).first()
     
@@ -57,7 +67,6 @@ class EventService:
             return False
     @staticmethod
     def update_event(event_id, update_data):
-        """Update an event's information in the database"""
         try:
             event = Event.objects.get(_id=event_id)
             for key, value in update_data.items():
@@ -70,7 +79,6 @@ class EventService:
 
     @staticmethod
     def delete_event(event_id):
-        """Delete a event from the database"""
         try:
             event = Event.objects.get(_id=event_id)
             event.delete()

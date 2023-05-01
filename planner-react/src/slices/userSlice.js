@@ -17,7 +17,13 @@ import { createSlice } from '@reduxjs/toolkit'
 export const userSlice = createSlice({
     name: 'user',
     initialState: {
-        user: JSON.parse(localStorage.getItem("planner-pp-user")) || null,
+        user: JSON.parse(localStorage.getItem("planner-pp-user")) || {
+            _id: null,
+            firstName: null,
+            lastName: null,
+            email: null,
+            roles: null
+        }
     },
     reducers: {
         setUser: (state, action) => {
@@ -25,25 +31,30 @@ export const userSlice = createSlice({
             // doesn't actually mutate the state because it uses the immer library,
             // which detects changes to a "draft state" and produces a brand new
             // immutable state based off those changes
+            const data = action.payload
+
             const userData = {
-                email: action.payload.email,
-                events: action.payload.events,
-                firstName: action.payload.firstName,
-                lastName: action.payload.lastName,
-                roles: action.payload.roles,
-                _id: action.payload._id.$oid
+                _id: data._id.$oid,
+                firstName: data.firstName,
+                lastName: data.lastName,
+                email: data.email,
+                roles: data.roles
             }
-            state.user = userData
-            localStorage.setItem("planner-pp-user", JSON.stringify(userData))
+            if (state.user._id !== null) {
+                // Case for updating a user
+            } else {
+                state.user = userData
+                localStorage.setItem("planner-pp-user", JSON.stringify(userData));
+            }
         },
         addVendorRoleToUser: (state) => {
-            const userData = state.user.user;
+            console.log("Adding vendor role to user: ", state.user)
+            const userData = state.user;
             userData.roles.push('Vendor')
-            localStorage.setItem("planner-pp-user", JSON.stringify(userData))
         },
         clearUser: (state) => {
             state.user = null
-            localStorage.removeItem("planner-pp-user")
+            localStorage.removeItem("planner-pp-user");
         }
     }
 })

@@ -12,7 +12,17 @@ import CreateEventPage from './features/event/createEvent.page';
 import EventsPage from './features/event/events.page';
 import VendorSignupPage from './features/signup/vendorSignup/vendorSignup.page';
 import Navbar from './components/navbar';
-
+import AddServicesForm from './features/vendor/addServices';
+import MessagePage from './features/message/message.page';
+import RatingPage from './features/rating/rating.page';
+import VendorEventsPage from './features/event/vendorEvents.page';
+import WhatForm from './features/search/what/form';
+import WhereForm from './features/search/where/form';
+import WhoForm from './features/search/who/form';
+import WhenForm from './features/search/when/form';
+import WhyForm from './features/search/why/form';
+import HowPage from './features/search/how/page';
+import WhoResults from './features/search/who/results';
 
 export default function App() {
 
@@ -28,11 +38,21 @@ export default function App() {
         <Route exact path="/login" element={<LogInPage/>} />
         <Route exact path="/vendorSignup" element={<VendorSignupPage/>}/>
         <Route exact path="/home/:userId" element={<HomePage/>} />
-        <Route exact path="/events" element={<CreateEventPage/>} />
-        <Route exact path="/events/:id" element={<EventsPage/>} />
-        <Route exact path="/events/:userId/messages" element={<></>} />
-        <Route exact path="/events/:userId/messages/:threadId" element={<></>} />
+        <Route exact path="/vendor/services" element={<AddServicesForm />}/>
         <Route exact path="/event/:eventId" element={<></>} />
+        <Route exact path="/events" element={<CreateEventPage/>} />
+        <Route exact path="/events/what" element={<WhatForm/>} />
+        <Route exact path="/events/where" element={<WhereForm/>} />
+        <Route exact path="/events/who" element={<WhoForm/>} />
+        <Route exact path='/who/results' element={<WhoResults/>} />
+        <Route exact path="/events/when" element={<WhenForm/>} />
+        <Route exact path="/events/why" element={<WhyForm/>} />
+        <Route exact path="/events/how" element={<HowPage/>} />
+        <Route exact path="/events/user/:userId" element={<EventsPage/>} />
+        <Route exact path="/events/vendor/:vendorId" element={<VendorEventsPage/>} />
+        <Route exact path="/messages" element={<MessagePage/>} />
+        <Route exact path="/ratings/vendor/:vendorId" element={<RatingPage/>} />
+        <Route exact path="/events/:userId/messages/:threadId" element={<></>} />
         <Route exact path="/profile/:userId" element={<></>} />
         <Route element={<ErrorPage/>} />
       </Routes>

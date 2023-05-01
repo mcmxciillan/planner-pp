@@ -1,7 +1,9 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
-import { setWhat } from '../../slices/eventSlice'
+// import { setWhat } from '../../slices/newEventSlice'
+import GoBackButton from "../../../components/goBackButton";
+import { setWhat } from "../../../slices/newEventSlice";
 
 export default function WhatForm() {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -9,24 +11,26 @@ export default function WhatForm() {
     const dispatch = useDispatch();
 
     const onSubmit = (data) => {
-        // Set what
+        console.log(data)
+        dispatch(setWhat({name: data.eventName, description: data.eventDescription}))
+        navigate(-1)
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <label>
-                Vendors
-                <input {...register("vendors", { required: true })} />
-            </label>
-            {errors.vendors && <span>This field is required</span>}
-
-            <label>
-                Organizers
-                <input {...register("email", { required: true, pattern: /^\S+@\S+$/i })} />
-            </label>
-            {errors.organizers && <span>This field is required</span>}
-
-            <button type="submit">All done</button>
-        </form>
+        <div>
+            <GoBackButton/>
+            <form onSubmit={handleSubmit(onSubmit)} className='my-4'>
+                <p className="text-center">What is this event?</p>
+                <div className="flex justify-center my-4">
+                    <input type="text" className='p-2 w-4/5 w-100 border rounded-lg' placeholder='Event Name' {...register("eventName", { required: true })} />
+                </div>
+                <div className="flex justify-center my-4">
+                    <input type="textarea" className='p-2 w-4/5 w-100 border rounded-lg' placeholder='Event Description' {...register("eventDescription", { required: false })} />
+                </div>
+                <div className="flex justify-center">
+                    <button className="border py-1 px-2 rounded-full mx-auto  w-1/4" type="submit">All done</button>
+                </div>
+            </form>
+        </div>
     );
 }
