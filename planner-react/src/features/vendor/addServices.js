@@ -1,16 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useForm, useFieldArray } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import { selectUser } from '../../slices/userSlice';
 import { useDispatch } from 'react-redux';
-import { addVendorServices, selectVendor, setVendorServices } from '../../slices/vendorSlice';
+import { addVendorServices, selectVendor } from '../../slices/vendorSlice';
+import { useNavigate } from 'react-router-dom';
 
 const AddServicesForm = () => {
     const vendor = useSelector(selectVendor);
-    const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [svcs, setSvcs] = useState([])
+    const [svcs, setSvcs] = useState([]);
+    const navigate = useNavigate();
     const { register, control, reset, handleSubmit } = useForm({
         defaultValues: {
             services: [{ 
@@ -24,13 +23,14 @@ const AddServicesForm = () => {
         control,
         name: 'services'
     });
-
+    useEffect(() => {}, [svcs])
     const onSubmit = (services) => {
         console.log("Services to add: ", services);
         const allServices = [...svcs, ...services.services]
         console.log(allServices)
-        // setSvcs(allServices)
+        setSvcs(allServices)
         dispatch(addVendorServices(vendor.id, services))
+        navigate('/', { replace: true });
         reset();
     };
 
@@ -39,7 +39,6 @@ const AddServicesForm = () => {
             <div>
             {fields.map((service, index) => (
                 <div key={service.id}>
-                
                 <div className="flex justify-center my-4">
                     <input className="p-2 w-4/5 border rounded-lg" type="text"
                         placeholder="Service name"

@@ -13,11 +13,11 @@ export const HowButton = () => {
         console.log("Creating new event...")
         try {
             const response = await fetch('http://localhost:5000/events', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(newEvent)
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newEvent)
             });
             const data = await response.json();
             dispatch(addEvent(data));

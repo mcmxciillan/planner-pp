@@ -1,8 +1,11 @@
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { selectVendor } from '../../slices/vendorSlice';
 
-export default function VendorHome(vendor) {
+export default function VendorHome() {
+    const vendor = useSelector(selectVendor)
 
-    console.log("Vendor home", vendor)
+    console.log("Vendor home: ", vendor)
     return (
         <div>
             <div>

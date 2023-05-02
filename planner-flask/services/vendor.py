@@ -55,6 +55,8 @@ class VendorService:
         svcs = []
         for svs in services_data:
             svcs.append({'serviceName':svs['serviceName'], 'serviceDescription':svs['serviceDescription'], 'price':svs['price']})
+        vendor_services = Vendor.objects.get(id=vendor_id).services
+        print("Vendor services: ", vendor_services)
         Vendor.objects(id=vendor_id).update_one(push_all__services=svcs)
         vendor = Vendor.objects.get(id=vendor_id)
         return vendor

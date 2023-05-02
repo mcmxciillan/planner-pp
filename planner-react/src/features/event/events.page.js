@@ -39,7 +39,11 @@ export default function EventsPage() {
                         </button>
                     </li>
                 ))}
-            </ul> : <div>No Events to show Yet!</div>}
+            </ul> : 
+                <div>
+                    <p className="text-center font-bold">No Events to show Yet!</p>
+                </div>
+            }
         </div>
     )
 }

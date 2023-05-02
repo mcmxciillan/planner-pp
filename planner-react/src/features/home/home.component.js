@@ -32,7 +32,7 @@ export default function Home() {
             {
                 vendor ? 
                     <div>
-                        <VendorHome {...vendor}/>
+                        <VendorHome />
                     </div> 
                 : 
                     <div className='block'>
