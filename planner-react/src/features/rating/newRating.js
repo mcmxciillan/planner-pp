@@ -5,7 +5,7 @@ export default function NewRating() {
         <div>
             <GoBackButton/>
             <h1>Leave a rating</h1>
-            <p>...Under construnction</p>
+            <p>...Under construction</p>
         </div>
     )
 }

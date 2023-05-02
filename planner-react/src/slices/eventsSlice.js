@@ -12,9 +12,11 @@ export const eventsSlice = createSlice({
         },
         addEvent: (state, action) => {
             console.log("Adding event :", action.payload)
+            state.events = [...state.events, action.payload]
         },
         removeEvent: (state, action) => {
             console.log("Removing event :", action.payload)
+            state.events = [...state.events.filter(ev => ev.id !== action.payload.eventId)]
         }
     }
 })

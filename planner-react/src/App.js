@@ -12,7 +12,6 @@ import CreateEventPage from './features/event/createEvent.page';
 import EventsPage from './features/event/events.page';
 import VendorSignupPage from './features/signup/vendorSignup/vendorSignup.page';
 import Navbar from './components/navbar';
-import AddServicesForm from './features/vendor/addServices';
 import MessagePage from './features/message/message.page';
 import RatingPage from './features/rating/rating.page';
 import VendorEventsPage from './features/event/vendorEvents.page';
@@ -23,6 +22,7 @@ import WhenForm from './features/search/when/form';
 import WhyForm from './features/search/why/form';
 import HowPage from './features/search/how/page';
 import WhoResults from './features/search/who/results';
+import VendorServicesPage from './features/vendor/services';
 
 export default function App() {
 
@@ -33,12 +33,12 @@ export default function App() {
     <Router>
       <Navbar />
       <Routes>
-        <Route exact path="/" element={userLoggedIn ? <HomePage user={user}/> : <LandingPage/>}/>{/* Need to figure out how to pass the User ID into the home page URL*/}
+        <Route exact path="/" element={userLoggedIn ? <HomePage user={user}/> : <LandingPage/>}/>
         <Route exact path="/signup" element={<SignUpPage/>} />
         <Route exact path="/login" element={<LogInPage/>} />
         <Route exact path="/vendorSignup" element={<VendorSignupPage/>}/>
         <Route exact path="/home/:userId" element={<HomePage/>} />
-        <Route exact path="/vendor/services" element={<AddServicesForm />}/>
+        <Route exact path="/vendor/services" element={<VendorServicesPage />}/>
         <Route exact path="/event/:eventId" element={<></>} />
         <Route exact path="/events" element={<CreateEventPage/>} />
         <Route exact path="/events/what" element={<WhatForm/>} />

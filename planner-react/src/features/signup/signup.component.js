@@ -4,7 +4,7 @@
 * useForm hook from react-hook-form to manage form state and validation. If the sign up is successful, it dispatches
 * the logUserIn and setJWT actions from the sessionSlice of the Redux store and navigates the user to the vendor signup
 * page. If the sign up is unsuccessful, it displays an error message to the user.
-* @returns {JSX.Element} - A form element that allows the user to sign up for the application.
+* @returns {JSX.Element} - A form element that allows the user to sign up for an account to access the application with.
 */
 import { useForm } from "react-hook-form";
 import axios from "axios";
@@ -73,7 +73,7 @@ export default function SignUpForm() {
             </div>
             {errors.loginError && <span>Login Error. Try again</span>}
             <div className="flex justify-center my-4">
-                <button className="border py-1 px-2 rounded-full mx-auto  w-1/4" type="submit">Sign Up</button>
+                <button className="border py-1 px-2 rounded-full mx-auto" type="submit">Sign Up</button>
             </div>
         </form>
         </div>

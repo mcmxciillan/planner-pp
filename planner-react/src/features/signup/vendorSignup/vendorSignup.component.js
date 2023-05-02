@@ -7,10 +7,13 @@ import { addVendorRoleToUser, selectUser } from '../../../slices/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { setVendor } from '../../../slices/vendorSlice';
 import GoBackButton from '../../../components/goBackButton';
+import { servicesList } from '../../../data/services';
 
 export default function VendorSignupForm() {
     const [showVendorForm, setShowVendorForm] = useState(false);
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors }, reset  } = useForm();
+    const [vendorType, setVendorType] = useState('');
+    const [suggestions, setSuggestions] = useState([]);
     const navigate = useNavigate();
     const user = useSelector(selectUser)
     const jwtToken = useSelector(selectJWT)
@@ -32,8 +35,8 @@ export default function VendorSignupForm() {
             email: data.email,
             address: data.address,
             zipcode: data.zipcode,
-            vendorType: data.vendorType,
-            operator_id: user.id
+            vendorType: vendorType,
+            operator_id: user._id
         }
         console.log(newVendorData)
         axios.post('http://localhost:5000/vendors/create', newVendorData, {
@@ -55,71 +58,90 @@ export default function VendorSignupForm() {
         })
     }; 
 
+    const handleAutocomplete = (event) => {
+        const inputVal = event.target.value;
+        setVendorType(inputVal)
+        const suggestions = servicesList.filter(
+        (service) =>
+            service.toLowerCase().indexOf(inputVal.toLowerCase()) > -1
+        );
+        setSuggestions(suggestions);
+    };
+
+    const handleSelection = (type) => {
+        console.log(type)
+        setVendorType(type);
+        setSuggestions([]);
+    };
+
     return (
         <>
         <GoBackButton />
             {!showVendorForm && (
                 <div>
-                    <p>Do you want to sign up as a vendor?</p>
-                    <button onClick={onYesClick}>Yes</button>
-                    <button onClick={onNoClick}>No</button>
+                    <p className='text-center font-bold'>Do you want to sign up as a vendor?</p>
+                    <div className="flex justify-center my-4">
+                        <button className="border py-1 px-2 rounded-full mx-auto w-1/4" onClick={onYesClick}>Yes</button>
+                    </div>
+                    <div className="flex justify-center my-4">
+                        <button className="border py-1 px-2 rounded-full mx-auto w-1/4" onClick={onNoClick}>No</button>
+                    </div>
                 </div>
             )}
 
             {showVendorForm && (
                 <form onSubmit={handleSubmit(handleVendorFormSubmit)}>
-                    <div className="field">
-                        <label className="label">Name</label>
-                        <div className="control">
-                            <input
-                            className="input"
+                    <div className="flex justify-center my-4">
+                        <input className="p-2 w-4/5 border rounded-lg"
+                            placeholder='Business Name'
                             type="text"
                             {...register('name', { required: true })}
-                            />
-                        </div>
+                        />
                     </div>
-                    <div className="field">
-                        <label className="label">Email</label>
-                        <div className="control">
-                            <input
-                            className="input"
+                    <div className="flex justify-center my-4">
+                        <input className="p-2 w-4/5 border rounded-lg"
+                            placeholder='Business Email'
                             type="email"
                             {...register('email', { required: true })}
-                            />
-                        </div>
+                        />
                     </div>
-                    <div className="field">
-                        <label className="label">Address</label>
-                        <div className="control">
-                            <input
-                            className="input"
+                    <div className="flex justify-center my-4">
+                        <input className="p-2 w-4/5 border rounded-lg"
+                            placeholder='Business Address'
                             type="text"
                             {...register('address', { required: true })}
-                            />
-                        </div>
+                        />
                     </div>
-                    <div className="field">
-                        <label className="label">Zipcode</label>
-                        <div className="control">
-                            <input
-                            className="input"
+                    <div className="flex justify-center my-4">
+                        <input className="p-2 w-4/5 border rounded-lg"
+                            placeholder='Zipcode'
                             type="text"
                             {...register('zipcode', { required: true })}
-                            />
-                        </div>
+                        />
                     </div>
-                    <div className="field">
-                        <label className="label">Vendor Type</label>
-                        <div className="control">
-                            <input
-                            className="input"
+                    <div className="flex justify-center my-4">
+                        <input className="p-2 w-4/5 border rounded-lg"
                             type="text"
-                            {...register('vendorType', { required: true })}
-                            />
-                        </div>
+                            id="service"
+                            placeholder='Vendor Type'
+                            name="vendorType"
+                            autoComplete="off"
+                            value={vendorType}
+                            {...register('vendorType')}
+                            onChange={handleAutocomplete} 
+                        />
                     </div>
-                    <div className="buttons">
-                        <button className="button is-success" type="submit">
+                        {suggestions.length > 0 && (
+                            <ul className='w-4/5 mx-auto'>
+                                {suggestions.map((vendorType) => (
+                                    <li className='text-center h-16 text-middle align-middle text-xl border' key={vendorType} onClick={() => handleSelection(vendorType)}>
+                                        {vendorType}
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    <div className="flex justify-center my-4">
+                        <button className="border py-1 px-2 rounded-full mx-auto w-1/4" type="submit">
                             Save
                         </button>
                     </div>

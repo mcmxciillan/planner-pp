@@ -2,36 +2,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import GoBackButton from '../../../components/goBackButton';
 import { useNavigate } from 'react-router-dom';
-
-const servicesList = [
-    'Caterer',
-    'Decorator',
-    'DJ',
-    'Florist',
-    'Photographer',
-    'Videographer',
-    'Baker',
-    'Event Planner',
-    'Entertainer',
-    'Transportation',
-    'Officiant',
-    'Rentals',
-    'Hair and Makeup',
-    'Bartender',
-    'Security',
-    'Ceremony Musician',
-    'Lighting and Sound',
-    'Calligrapher',
-    'Photo Booth',
-    'Valet',
-    'Drone Services',
-    'Candy Buffet',
-    'Ice Sculpture',
-    'Fireworks',
-    'Limo',
-    'Food Truck',
-    'Venue'
-];
+import { servicesList } from '../../../data/services';
 
 export default function WhoForm() {
     const { register, handleSubmit, reset } = useForm();
@@ -47,7 +18,6 @@ export default function WhoForm() {
             !selectedServices.includes(service)
         );
         setSuggestions(suggestions);
-        navigate()
     };
 
     const onSubmit = () => {

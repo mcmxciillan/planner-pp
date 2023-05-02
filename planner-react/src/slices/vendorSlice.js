@@ -4,7 +4,18 @@ import { createSlice } from '@reduxjs/toolkit'
 export const vendorSlice = createSlice({
     name: 'vendor',
     initialState: {
-        vendor: null,
+        vendor: {
+            id: null,
+            name: null,
+            email: null,
+            address: null,
+            zipcode: null,
+            vendorType: null,
+            operatorIds: null,
+            rating: null,
+            ratingCount: null,
+            services: null
+        },
     },
     reducers: {
         setVendor: (state, action) => {
@@ -14,7 +25,6 @@ export const vendorSlice = createSlice({
                 name: payload.name,
                 email: payload.email,
                 address: payload.address,
-                zipcode: payload.zipcode,
                 vendorType: payload.vendorType,
                 operatorIds: payload.operator_ids,
                 rating: payload.rating,
@@ -24,11 +34,9 @@ export const vendorSlice = createSlice({
             state.vendor = vendorData
         },
         setVendorServices: (state, action) => {
-            console.log("Vendor state: ", state.vendor)
-            const newServices = action.payload.services;
-            // const existingServices = state.vendor
-            // console.log([...newServices, ...existingServices])
-            // state.vendor.services.append(...services)
+            console.log("Vendor state services: ", action.payload)
+            // const newServices = action.payload;
+            // state.vendor.services = newServices
         },
         removeVendorServices: (state, action) => {
             console.log("Services to remove: ", action.payload)
@@ -38,6 +46,22 @@ export const vendorSlice = createSlice({
         }
     }
 })
+
+export const addVendorServices = (id, services) => async (dispatch) => {
+    console.log("Adding vendor services in slice")
+    fetch(`http://localhost:5000/vendor/services/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+            body: JSON.stringify({services: services}),
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data)
+        })
+        .catch((error) => console.error(error));
+}
 
 export const { setVendor, setVendorServices, clearVendor } = vendorSlice.actions
 export const selectVendor = (state) => state.vendor.vendor

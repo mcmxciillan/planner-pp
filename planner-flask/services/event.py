@@ -8,12 +8,12 @@ class EventService:
     
     @staticmethod
     def get_events_by_organizer_id(organizer_id):
-        ''' TODO: Need to return only those events that havent occured '''
+        ''' TODO: Need to return only those events whos date hasn't yet passed '''
         return Event.objects(organizers=organizer_id)
     
     @staticmethod
     def get_events_by_vendor_id(vendor_id):
-        ''' TODO: Need to return only those events that havent occured '''
+        ''' TODO: Need to return only those events whos date hasn't yet passed '''
         return Event.objects(vendors=vendor_id)
     
     @staticmethod
@@ -22,6 +22,7 @@ class EventService:
     
     @staticmethod
     def add_event(event: dict):
+        print(f"Adding new event in event service: {event}")
         new_event = Event(**event)
         new_event.save()
         return new_event

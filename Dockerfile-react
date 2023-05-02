@@ -8,7 +8,7 @@ WORKDIR /app
 COPY planner-react/package*.json /app
 
 # Install dependencies
-RUN npm install
+RUN yarn
 
 # Copy the rest of the application files to the working directory
 COPY ./planner-react /app

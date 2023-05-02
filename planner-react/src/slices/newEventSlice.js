@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 export const newEventSlice = createSlice({
     name: 'newEvent',
     initialState: {
-        event: {
+        newEvent: {
             name: null,
             date: null,
             description: null,
@@ -18,27 +18,32 @@ export const newEventSlice = createSlice({
         setWhat: (state, action) => {
             const what = action.payload;
             console.log("Setting What: ", what)
-            state.event.name = what.name
-            state.event.description = what.description
+            state.newEvent.name = what.name
+            state.newEvent.description = what.description
         },
         setWhere: (state, action) => {
             const where = action.payload;
             console.log("Setting Where: ", where)
-            state.event.address = {street: where.address, zipcode: where.zipcode}
+            state.newEvent.address = {street: where.address, zipcode: where.zipcode}
         },
         setWho: (state, action) => {
             const who = action.payload;
             console.log("Setting Who: ", who)
+            state.newEvent.vendors = who.vendors
+            state.newEvent.organizers = [who.organizer]
         },
         setWhen: (state, action) => {
             const when = action.payload;
-            console.log(when)
+            console.log("Setting when: ", when)
+            state.newEvent.date = when.date;
+            state.newEvent.startTime = when.startTime;
+            state.newEvent.duration = when.duration;
         },
         setWhy: (state, action) => {
             // Analytics info
             const why = action.payload;
             console.log("Setting Why: ", why)
-            state.event.description = why
+            state.newEvent.analytics = why
         },
         setEvent: (state, action) => {
             const e = action.payload;
@@ -53,14 +58,14 @@ export const newEventSlice = createSlice({
                 address: e.address,
                 duration: e.duration
             }
-            state.event = eventData
+            state.newEvent = eventData
         },
         clearEvent: (state) => {
-            state.event = null
+            state.newEvent = null
         }
     }
 })
 
 export const { setWhat, setWhere, setWho, setWhen, setWhy, setEvent, clearEvent } = newEventSlice.actions
-export const selectEvent = (state) => state.newEvent.newEvent
+export const selectNewEvent = (state) => state.newEvent.newEvent
 export default newEventSlice.reducer

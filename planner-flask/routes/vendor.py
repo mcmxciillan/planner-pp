@@ -58,6 +58,16 @@ def update_vendor(id):
     else:
         return jsonify(message='Error updating vendor'), 400
 
+@vendor_controller.route('/vendor/services/<id>', methods=['PUT'])
+def add_vendor_services(id):
+    """AAdds services to a single vendor by id"""
+    data = request.get_json()
+    vendor = VendorService.add_services_to_vendor(id, data)
+    if vendor:
+        return jsonify(vendor), 200
+    else:
+        return jsonify(message='Error updating vendor'), 400
+
 @vendor_controller.route('/vendors/<id>', methods=['DELETE'])
 def delete_vendor(id):
     """Delete a single vendor by id"""

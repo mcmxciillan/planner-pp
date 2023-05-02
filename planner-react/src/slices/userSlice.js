@@ -40,12 +40,8 @@ export const userSlice = createSlice({
                 email: data.email,
                 roles: data.roles
             }
-            if (state.user._id !== null) {
-                // Case for updating a user
-            } else {
-                state.user = userData
-                localStorage.setItem("planner-pp-user", JSON.stringify(userData));
-            }
+            state.user = userData
+            localStorage.setItem("planner-pp-user", JSON.stringify(userData));
         },
         addVendorRoleToUser: (state) => {
             console.log("Adding vendor role to user: ", state.user)

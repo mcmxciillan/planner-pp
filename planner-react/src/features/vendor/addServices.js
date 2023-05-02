@@ -1,21 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { selectUser } from '../../slices/userSlice';
 import { useDispatch } from 'react-redux';
-import { setVendorServices } from '../../slices/vendorSlice';
+import { addVendorServices, selectVendor, setVendorServices } from '../../slices/vendorSlice';
 
 const AddServicesForm = () => {
-    const user = useSelector(selectUser);
+    const vendor = useSelector(selectVendor);
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { register, control, handleSubmit } = useForm({
+    const [svcs, setSvcs] = useState([])
+    const { register, control, reset, handleSubmit } = useForm({
         defaultValues: {
             services: [{ 
                 serviceName: '', 
                 serviceDescription: '', 
-                price: 0 
+                price: '' 
             }]
         }
     });
@@ -25,10 +26,12 @@ const AddServicesForm = () => {
     });
 
     const onSubmit = (services) => {
-        // Submit services to server here
         console.log("Services to add: ", services);
-        dispatch(setVendorServices(services))
-        // navigate(`/home/${user._id}`);
+        const allServices = [...svcs, ...services.services]
+        console.log(allServices)
+        // setSvcs(allServices)
+        dispatch(addVendorServices(vendor.id, services))
+        reset();
     };
 
     return (
@@ -36,35 +39,41 @@ const AddServicesForm = () => {
             <div>
             {fields.map((service, index) => (
                 <div key={service.id}>
-                <input
-                    type="text"
-                    placeholder="Service name"
-                    {...register(`services.${index}.serviceName`)}
-                />
-                <input
-                    type="text"
+                
+                <div className="flex justify-center my-4">
+                    <input className="p-2 w-4/5 border rounded-lg" type="text"
+                        placeholder="Service name"
+                        {...register(`services.${index}.serviceName`)}
+                    />
+                </div>
+                <div className="flex justify-center my-4">
+                    <input className="p-2 w-4/5 border rounded-lg" type="text"
                     placeholder="Description"
                     {...register(`services.${index}.serviceDescription`)}
                 />
-                <input
-                    type="number"
+                </div>
+                <div className="flex justify-center my-4">
+                    <input className="p-2 w-4/5 border rounded-lg" type="number"
                     step="0.01"
                     placeholder="Price"
                     {...register(`services.${index}.price`)}
                 />
+                </div>
                 {index > 0 && (
-                    <button type="button" onClick={() => remove(index)}>
+                    <button className='border py-1 px-2 rounded-full mx-4 my-2  w-1/3' type="button" onClick={() => remove(index)}>
                     Delete
                     </button>
                 )}
                 </div>
             ))}
-            <button type="button" onClick={() => append({ serviceName: '', serviceDescription: '', price: '' })}>
+            <button className='border py-1 px-2 rounded-full mx-4  w-1/3' type="button" onClick={() => append({ serviceName: '', serviceDescription: '', price: '' })}>
                 Add service
             </button>
 
             </div>
-            <button type="submit">Save</button>
+            <div className="flex justify-center my-4">
+                <button className="border py-1 px-2 rounded-full mx-auto  w-1/4"type="submit">Save</button>
+            </div>
         </form>
     );
 };

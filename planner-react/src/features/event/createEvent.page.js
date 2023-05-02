@@ -16,6 +16,7 @@ export default function CreateEventPage() {
             <WhoButton />
             <WhenButton />
             <WhyButton />
+            <p className="text-center">and we'll tell you...</p>
             <HowButton />
         </div>
     )
