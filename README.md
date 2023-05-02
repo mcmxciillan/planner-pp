@@ -7,28 +7,35 @@ This repository contains a React app, an Flask server, and a MongoDB database, a
 ## Requirements
 + Docker
 + Docker Compose
++ Python3
++ Node and Yarn
 
 ## Getting Started
-Clone this repository:
-Copy code
-git clone https://github.com/yourusername/your-repo.git
-Change to the project directory:
-Copy code
-cd your-repo
-Build the images and start the containers:
+Clone this repository and navigate into the project:
+cd planner-pp
+
+Build the mongodb image and start the mongodb container:
 ```docker-compose up```
-This command will build the images for the React app, Flask server, and MongoDB database using the Dockerfiles provided in the repository, and start the containers.
+This command will build the images for the MongoDB database using the Dockerfile provided in the repository, and start the container.
+
+Navigate to the 'planner-flask' directory and run 
+```pip3 install -r requirements.txt```
+to install the python packages needed for the flask API to work.
+
+Once those have finished installing, run 
+```flask run```
+to run the web server.
+
+In another terminal, navigate to the 'planner-react' directory, and run 
+```yarn```
+to install all necessary Node modules.
+
+Once those have finished installing, run 
+```yarn start```
+to run the react app.
 
 The React app will be running on http://localhost:3000 and the Flask server will be running on http://localhost:5000
-Stopping the Containers
-You can use CTRL+C to stop the containers.
-
-Alternatively, you can use the following command to stop the running containers:
-
-```docker-compose down```
 
 ## Note
 Make sure that the ports 3000 and 5000 are available on your host machine, as those are the ports exposed by the React app and Flask server containers respectively.
 MongoDB data will persist in the mongodb-data volume defined in the docker-compose.yml file, so if you remove the containers, data will not be deleted
-You can customize the docker-compose.yml file to suit your needs, for example, if you want to specify custom environment variables for the services or configure other options.
-And that's it! You have your React app, Flask server, and MongoDB database running in Docker containers

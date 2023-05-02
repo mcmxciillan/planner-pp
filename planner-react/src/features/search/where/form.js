@@ -7,7 +7,7 @@ import { setWhere } from '../../../slices/newEventSlice';
 import GoBackButton from '../../../components/goBackButton';
 
 export default function WhereForm() {
-    const { register, handleSubmit, formState, watch } = useForm();
+    const { register, handleSubmit, watch } = useForm();
     const [venues, setVenues] = useState([]);
     const dispatch = useDispatch();
     const navigate = useNavigate();
