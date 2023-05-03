@@ -30,7 +30,7 @@ export default function Home() {
     return (
         <div>
             {
-                vendor ? 
+                vendor.id !== null ? 
                     <div>
                         <VendorHome />
                     </div> 
