@@ -43,7 +43,7 @@ def get_vendor_events(vendor_id):
 
 @event_controller.route('/event/<event_id>', methods=['GET'])
 def get_event(event_id):
-    event = Event.objects(_id=event_id).first()
+    event = Event.objects(id=event_id).first()
     if event:
         return jsonify(event), 200
     else:

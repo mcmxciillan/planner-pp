@@ -4,18 +4,7 @@ import { createSlice } from '@reduxjs/toolkit'
 export const vendorSlice = createSlice({
     name: 'vendor',
     initialState: {
-        vendor: {
-            id: null,
-            name: null,
-            email: null,
-            address: null,
-            zipcode: null,
-            vendorType: null,
-            operatorIds: null,
-            rating: null,
-            ratingCount: null,
-            services: null
-        },
+        vendor: JSON.parse(localStorage.getItem("planner-pp-vendor")) || null
     },
     reducers: {
         setVendor: (state, action) => {
@@ -32,6 +21,7 @@ export const vendorSlice = createSlice({
                 services: payload.services
             }
             state.vendor = vendorData
+            localStorage.setItem("planner-pp-vendor", JSON.stringify(vendorData));
         },
         setVendorServices: (state, action) => {
             console.log("Vendor state services: ", action.payload)
@@ -43,6 +33,7 @@ export const vendorSlice = createSlice({
         },
         clearVendor: (state) => {
             state.vendor = null
+            localStorage.removeItem("planner-pp-vendor");
         }
     }
 })

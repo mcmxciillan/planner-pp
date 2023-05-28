@@ -38,10 +38,19 @@ def get_venues_by_zipcode(zipcode):
     else:
         return jsonify(message='Error fetching venues'), 400
 
-@vendor_controller.route('/vendor/<operator_id>', methods=['GET'])
-def get_vendor(operator_id):
+@vendor_controller.route('/vendor/<vendor_id>', methods=['GET'])
+def get_vendor_by_id(vendor_id):
     """Retrieve a single vendor by an operator id"""
-    vendor = VendorService.get_vendor_by_operator_id(operator_id)
+    vendor = VendorService.find_vendor_by_id(vendor_id)
+    if vendor:
+        return jsonify(vendor), 200
+    else:
+        return jsonify(message='Error fetching vendor'), 400
+
+@vendor_controller.route('/vendor/operator/<operator_id>', methods=['GET'])
+def get_vendor_by_operator_id(operator_id):
+    """Retrieve a single vendor by an operator id"""
+    vendor = VendorService.find_vendor_by_operator_id(operator_id)
     if vendor:
         return jsonify(vendor), 200
     else:
@@ -85,3 +94,25 @@ def search_vendors_by_type():
         vendors = VendorService.find_vendors_by_type(vendor_type=type)
         vendors_by_type[type] = vendors
     return jsonify(vendors_by_type)
+
+@vendor_controller.route('/vendors', methods=['POST'])
+def get_vendors_within_distance():
+    data = request.get_json()
+    zipcode = data.get('zipcode')
+    distance = data.get('distance')
+
+    if not zipcode or not distance:
+        return jsonify({'error': 'Zipcode and distance are required fields.'}), 400
+
+    try:
+        distance = int(distance)
+    except ValueError:
+        return jsonify({'error': 'Distance must be a valid integer.'}), 400
+
+    # Query vendors based on the zipcode field
+    vendors = Vendor.objects(zipcode=zipcode)
+
+    # You can further filter vendors based on the distance using external libraries or calculations
+
+    vendor_list = [{'name': vendor.name, 'zipcode': vendor.zipcode} for vendor in vendors]
+    return jsonify(vendor_list)

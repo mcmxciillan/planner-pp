@@ -1,7 +1,7 @@
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import GoBackButton from '../../../components/goBackButton';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { setWho } from '../../../slices/newEventSlice';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../../slices/userSlice';
@@ -48,11 +48,18 @@ export default function WhoResults() {
                             <ul>
                                 {location.state[type].map((vendor, i) => (
                                     <li key={i} className='border rounded-lg p-2 my-2'>
-                                        <p className='text-center font-bold'>{vendor.name}</p>
-                                        <p className='text-center'>Rating: {vendor.rating}</p>
-                                        <p className='text-center'>{vendor.address.street}, {vendor.address.zipcode}</p>
-                                        <div className="flex justify-center my-4">
-                                            {isVendorSelected(vendor._id.$oid) ? <button className='border-black border py-1 px-2 rounded-full mx-auto bg-pp-green opacity-50' onClick={(() => removeVendor(vendor._id.$oid))}><span className='font-bold'>&#x2713;</span></button> : <button className="border py-1 px-2 rounded-full mx-auto" type='button' onClick={() => selectVendor(vendor._id.$oid)}>Add to Event</button>}
+                                        <div>
+                                            <p className='text-center font-bold'>{vendor.name}</p>
+                                            <p className='text-center'>Rating: {vendor.rating}</p>
+                                            <p className='text-center'>{vendor.address.street}, {vendor.address.zipcode}</p>
+                                            <div className="flex justify-center my-4">
+                                                {isVendorSelected(vendor._id.$oid) ? 
+                                                    <button className='border-black border py-1 px-2 rounded-full mx-auto bg-pp-green opacity-50' 
+                                                        onClick={(() => removeVendor(vendor._id.$oid))}><span className='font-bold'>&#x2713;</span></button> : 
+                                                    <button className="border py-1 px-2 rounded-full mx-auto" 
+                                                        onClick={() => selectVendor(vendor._id.$oid)}>Add to Event</button>}
+                                                <Link className='mx-auto text-center p-2 border rounded-lg' to={`/vendor/${vendor._id.$oid}`}>Details</Link>
+                                            </div>
                                         </div>
                                     </li>
                                 ))}

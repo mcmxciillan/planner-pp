@@ -20,6 +20,14 @@ def get_user(user_email):
     else:
         return jsonify(message='Error fetching user'), 400
 
+@user_controller.route('/eventOrganizer/<user_id>', methods=['GET'])
+def get_event_organizer_by_id(user_id):
+    user = UserService.get_user_by_id(user_id=user_id)
+    if user:
+        return jsonify(user), 200 
+    else:
+        return jsonify(message='Error fetching user'), 400
+
 @user_controller.route('/users/<user_id>', methods=['PUT'])
 def update_user(user_id):
     data = request.get_json()

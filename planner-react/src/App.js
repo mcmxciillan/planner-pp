@@ -23,6 +23,9 @@ import WhyForm from './features/search/why/form';
 import HowPage from './features/search/how/page';
 import WhoResults from './features/search/who/results';
 import VendorServicesPage from './features/vendor/services';
+import EventDetails from './features/event/eventDetails';
+import VendorDetails from './features/vendor/vendorDetails';
+import EditEvent from './features/event/editEvent';
 
 export default function App() {
 
@@ -38,8 +41,10 @@ export default function App() {
         <Route exact path="/login" element={<LogInPage/>} />
         <Route exact path="/vendorSignup" element={<VendorSignupPage/>}/>
         <Route exact path="/home/:userId" element={<HomePage/>} />
+        <Route exact path="/vendor/:vendorId" element={<VendorDetails />}/>
         <Route exact path="/vendor/services" element={<VendorServicesPage />}/>
-        <Route exact path="/event/:eventId" element={<></>} />
+        <Route exact path="/event/:eventId" element={<EventDetails />} />
+        <Route exact path="/event/edit/:eventId" element={<EditEvent />} />
         <Route exact path="/events" element={<CreateEventPage/>} />
         <Route exact path="/events/what" element={<WhatForm/>} />
         <Route exact path="/events/where" element={<WhereForm/>} />

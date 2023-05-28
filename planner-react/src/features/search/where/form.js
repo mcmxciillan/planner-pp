@@ -9,6 +9,7 @@ import GoBackButton from '../../../components/goBackButton';
 export default function WhereForm() {
     const { register, handleSubmit, watch } = useForm();
     const [venues, setVenues] = useState([]);
+    const [maxDistance, setMaxDistance] = useState(0);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -36,6 +37,10 @@ export default function WhereForm() {
             selectedVenue
         };
         onSubmit(updatedFormData);
+    };
+
+    const handleSliderChange = (event) => {
+        setMaxDistance(event.target.value);
     };
 
     const handleVenueSearch = async (zipcode) => {
@@ -74,6 +79,28 @@ export default function WhereForm() {
                     <input type="radio" id="host-venue" value="venue" {...register("hostingOption")} />
                     <label className='mx-2' htmlFor="host-venue">Host at a venue</label>
                 </div>
+                    {hostingOption === "venue" && (
+                        <>
+                        <div className="flex justify-center my-4"><p></p></div>
+                            <div className="flex justify-center my-4">
+                                <input type="text" className='p-2 w-4/5 w-100 border rounded-lg' placeholder='Zip Code' {...register("zipcode")} />
+                            </div>
+                            <div className="grid justify-center my-4">
+                            <label className='' htmlFor="maxDistance">Maximum Distance (in miles)</label>
+                                <input
+                                className='block'
+                                type="range"
+                                id="maxDistance"
+                                {...register('maxDistance', { required: 'Please enter a maximum distance' })}
+                                min={0}
+                                max={100}
+                                value={maxDistance}
+                                onChange={handleSliderChange}
+                                />
+                                <span>{maxDistance} miles</span>                           
+                            </div>
+                        </>
+                    )}
                 <div className="flex justify-center">
                     <button className="border py-1 px-2 rounded-full mx-auto w-1/4" type="submit">All done</button>
                 </div>

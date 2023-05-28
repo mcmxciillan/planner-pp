@@ -16,7 +16,7 @@ class UserService:
     def get_user_by_id(user_id):
         """Retrieve a specific user by ID"""
         try:
-            return User.objects.get(_id=user_id)
+            return User.objects.get(id=user_id)
         except Exception as e:
             raise e
 

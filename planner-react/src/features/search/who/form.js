@@ -60,7 +60,7 @@ export default function WhoForm() {
                 className='p-2 w-4/5 mx-auto border rounded-lg justify-self-center flex'
                     type="text"
                     id="service"
-                    placeholder='Enter a Service'
+                    placeholder='Enter a Service you need'
                     name="service"
                     autoComplete="off"
                     {...register('service')}

@@ -10,7 +10,7 @@ export default function VendorServicesPage() {
 
     useEffect(()=> {
         async function fetchVendorServices() {
-            const response = await fetch(`http://localhost:5000/vendor/${user._id}`);
+            const response = await fetch(`http://localhost:5000/vendor/operator/${user._id}`);
             const data = await response.json();
             setServices(data.services)
         }

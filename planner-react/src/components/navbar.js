@@ -9,7 +9,6 @@ export default function Navbar() {
     const user = useSelector(selectUser);
 
     function isUserLoggedIn() {
-        console.log(user)
         return user._id !== null
     }
 

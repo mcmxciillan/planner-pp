@@ -1,28 +1,25 @@
 import { useSelector } from "react-redux";
 import { selectUser } from "../../slices/userSlice";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { fetchUserEvents } from "../../slices/eventsSlice";
+import { selectEvents } from "../../slices/eventsSlice";
+import { useDispatch } from "react-redux";
 
 export default function EventsPage() {
     const [dataLoaded, setDataLoaded] = useState(false);
     const user = useSelector(selectUser);
-    const [events, setEvents] = useState([]);
     const navigate = useNavigate();
-    
+    const events = useSelector(selectEvents);
+    const dispatch = useDispatch();
+
     useEffect(() => {
-        async function fetchUserEvents() {
-            try {
-                const response = await fetch(`http://localhost:5000/events/user/${user._id}`);
-                const data = await response.json();
-                console.log("Returning user events data: ", data);
-                setEvents(data);
-                setDataLoaded(true);
-            } catch (error) {
-                console.error("Error fetching events: ", error);
-            }
+        async function loadData() {
+            dispatch(fetchUserEvents(user._id));
+            setDataLoaded(true);
         }
-        fetchUserEvents();
-    }, [user._id]);
+        loadData();
+    }, [user._id, dispatch]);
 
     return(
         <div>
@@ -30,13 +27,13 @@ export default function EventsPage() {
             {dataLoaded && events.length > 0 ? <ul>
                 {events.map((ev, i) => (
                     <li className="border rounded-xl w-4/5 mx-auto p-2 my-2 text-center" key={i}>
-                        <button>
+                        <Link to={`/event/${ev._id.$oid}`}>
                             <div>
                                 <p className="font-bold">{ev.name}</p>
                                 <p>{ev.address.street}</p>
                                 <p>{new Date(ev.date.$date).toString()}</p>
                             </div>
-                        </button>
+                        </Link>
                     </li>
                 ))}
             </ul> : 

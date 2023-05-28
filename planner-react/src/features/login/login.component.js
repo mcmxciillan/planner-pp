@@ -25,15 +25,12 @@ export default function LogInForm() {
             if (response.status === 200) {
                 const userData = response.data.userData
                 const userId = userData._id.$oid
-                console.log("Logging in user: ", userData)
                 dispatch(logUserIn(userData))
                 dispatch(setUser(userData))
                 dispatch(setJWT(response.data.access_token))
                 if (userData.roles.indexOf('Vendor') > 0) {
-                    console.log("User is a vendor. Fetching vendor data...")
-                    const vendorResponse = await fetch(`http://localhost:5000/vendor/${userId}`)
+                    const vendorResponse = await fetch(`http://localhost:5000/vendor/operator/${userId}`)
                     const vendor = await vendorResponse.json()
-                    console.log("Vendor: ", vendor)
                     dispatch(setVendor(vendor))
                 }
                 navigate(`/home/${userId}`);

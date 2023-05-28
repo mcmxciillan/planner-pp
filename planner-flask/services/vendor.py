@@ -1,7 +1,7 @@
 from flask import jsonify
 from models.vendor import Vendor
-from models import Service
 from bson import ObjectId
+
 class VendorService:
 
     @staticmethod
@@ -20,7 +20,6 @@ class VendorService:
             "services": [],
             "operator_ids": [ObjectId(data['operator_id'])]
         }
-        print("Vendor data", vendorData)
         vendor = Vendor(**vendorData)
         vendor.save()
         return vendor
@@ -31,14 +30,12 @@ class VendorService:
         return venues
 
     @staticmethod
-    def get_vendor(vendor_id):
+    def find_vendor_by_id(vendor_id):
         vendor = Vendor.objects.get(id=vendor_id)
-        print("Vendor found: ", vendor)
         return vendor
 
     @staticmethod
-    def get_vendor_by_operator_id(operator_id):
-        print(operator_id)
+    def find_vendor_by_operator_id(operator_id):
         vendor = Vendor.objects.get(operator_ids=operator_id)
         return vendor
 
@@ -51,12 +48,10 @@ class VendorService:
     @staticmethod
     def add_services_to_vendor(vendor_id, data):
         services_data = data['services']['services']
-        print(vendor_id)
         svcs = []
         for svs in services_data:
             svcs.append({'serviceName':svs['serviceName'], 'serviceDescription':svs['serviceDescription'], 'price':svs['price']})
         vendor_services = Vendor.objects.get(id=vendor_id).services
-        print("Vendor services: ", vendor_services)
         Vendor.objects(id=vendor_id).update_one(push_all__services=svcs)
         vendor = Vendor.objects.get(id=vendor_id)
         return vendor
@@ -67,5 +62,6 @@ class VendorService:
         vendor.delete()
         return jsonify(message='Vendor deleted successfully.'), 200
 
+    @staticmethod
     def find_vendors_by_type(vendor_type, limit=100):
         return Vendor.objects(vendorType=vendor_type)[:limit]

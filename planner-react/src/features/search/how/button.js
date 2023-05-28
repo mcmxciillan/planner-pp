@@ -7,10 +7,8 @@ export const HowButton = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const newEvent = useSelector(selectNewEvent)
-    console.log(newEvent)
 
     async function createNewEvent() {
-        console.log("Creating new event...")
         try {
             const response = await fetch('http://localhost:5000/events', {
                 method: 'POST',
@@ -21,7 +19,6 @@ export const HowButton = () => {
             });
             const data = await response.json();
             dispatch(addEvent(data));
-            console.log("Event created!")
             navigate('/events/how')
         } catch (error) {
             console.error(error);
