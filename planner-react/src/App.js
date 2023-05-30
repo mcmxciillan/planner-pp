@@ -26,6 +26,7 @@ import VendorServicesPage from './features/vendor/services';
 import EventDetails from './features/event/eventDetails';
 import VendorDetails from './features/vendor/vendorDetails';
 import EditEvent from './features/event/editEvent';
+import WhereResults from './features/search/where/results';
 
 export default function App() {
 
@@ -48,18 +49,21 @@ export default function App() {
         <Route exact path="/events" element={<CreateEventPage/>} />
         <Route exact path="/events/what" element={<WhatForm/>} />
         <Route exact path="/events/where" element={<WhereForm/>} />
+        <Route exact path="/events/where/results" element={<WhereResults/>} />
         <Route exact path="/events/who" element={<WhoForm/>} />
-        <Route exact path='/who/results' element={<WhoResults/>} />
+        <Route exact path='/events/who/results' element={<WhoResults/>} />
         <Route exact path="/events/when" element={<WhenForm/>} />
         <Route exact path="/events/why" element={<WhyForm/>} />
         <Route exact path="/events/how" element={<HowPage/>} />
         <Route exact path="/events/user/:userId" element={<EventsPage/>} />
         <Route exact path="/events/vendor/:vendorId" element={<VendorEventsPage/>} />
         <Route exact path="/messages" element={<MessagePage/>} />
+        <Route exact path="/event/:eventId/messages" element={<></>} />
+        <Route exact path="/event/:eventId/message/:id" element={<></>} />
         <Route exact path="/ratings/vendor/:vendorId" element={<RatingPage/>} />
         <Route exact path="/events/:userId/messages/:threadId" element={<></>} />
         <Route exact path="/profile/:userId" element={<></>} />
-        <Route element={<ErrorPage/>} />
+        <Route path='*' element={<ErrorPage/>} />
       </Routes>
   </Router>
   );

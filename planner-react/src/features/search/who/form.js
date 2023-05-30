@@ -3,10 +3,17 @@ import { useForm } from 'react-hook-form';
 import GoBackButton from '../../../components/goBackButton';
 import { useNavigate } from 'react-router-dom';
 import { servicesList } from '../../../data/services';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectWho, setWhy, selectWhy } from '../../../slices/newEventSlice';
 
 export default function WhoForm() {
-    const { register, handleSubmit, reset } = useForm();
-    const [selectedServices, setSelectedServices] = useState([]);
+    const defaultValues = useSelector(selectWho);
+    const dispatch = useDispatch();
+    const { register, handleSubmit, reset } = useForm({
+        defaultValues,
+    });
+    const services = useSelector(selectWhy).analytics.selectedServices;
+    const [selectedServices, setSelectedServices] = useState(services);
     const [suggestions, setSuggestions] = useState([]);
     const navigate = useNavigate();
 
@@ -22,6 +29,7 @@ export default function WhoForm() {
 
     const onSubmit = () => {
         console.log(selectedServices)
+        dispatch(setWhy({selectedServices: selectedServices}))
         searchVendorsByTypes(selectedServices)
     }
 
@@ -45,8 +53,7 @@ export default function WhoForm() {
             })
             .then((response) => response.json())
             .then((data) => {
-                console.log(data)
-                navigate('/who/results', { state: data });
+                navigate('/events/who/results', { state: data });
             })
             .catch((error) => console.error(error));
     }

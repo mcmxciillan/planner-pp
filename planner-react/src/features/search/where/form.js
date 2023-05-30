@@ -2,53 +2,48 @@ import { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
-// import { setWhere } from '../../slices/newEventSlice'
 import { setWhere } from '../../../slices/newEventSlice';
 import GoBackButton from '../../../components/goBackButton';
+import { useSelector } from 'react-redux';
+import { selectWhere } from '../../../slices/newEventSlice';
 
 export default function WhereForm() {
-    const { register, handleSubmit, watch } = useForm();
-    const [venues, setVenues] = useState([]);
+    const defaultValues = useSelector(selectWhere);
+    const { register, handleSubmit, watch } = useForm({
+        defaultValues
+    });
     const [maxDistance, setMaxDistance] = useState(0);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const onSubmit = (data) => {
-        console.log(data)
         if (data.hostingOption === "myself") {
-            dispatch(setWhere({address: data.streetAddress, zipcode: data.zipcode}))
+            dispatch(setWhere({street: data.street, zipcode: data.zipcode, venue: null}))
             navigate(-1)
         } else {
-            console.log("Searching for venues instead")
-            navigate(-1)
+            dispatch(setWhere({street: null, zipcode: data.zipcode, venue: null}))
+            handleVenueSearch(data.zipcode)
         }
     }
     const hostingOption = watch("hostingOption");
 
-    const handleVenueSelect = (venue) => {
-        // Set the selected venue in the form data
-        const selectedVenue = {
-            venueName: venue.name,
-            venueAddress: venue.address,
-            venueRating: venue.rating
-        };
-        const updatedFormData = {
-            ...watch(),
-            selectedVenue
-        };
-        onSubmit(updatedFormData);
-    };
-
     const handleSliderChange = (event) => {
         setMaxDistance(event.target.value);
     };
-
     const handleVenueSearch = async (zipcode) => {
         const url = `http://localhost:5000/venue/${zipcode}`;
         try {
-            const response = await fetch(url);
+            // fetch a post request to the backend with zipcode and range as the body
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ distance: maxDistance }),
+            });
             const venues = await response.json();
-            setVenues(venues);
+            console.log("Venue results: ", venues)
+            navigate('/events/where/results', { state: venues })
         } catch (error) {
             console.error(error);
         }
@@ -67,10 +62,10 @@ export default function WhereForm() {
                     {hostingOption === "myself" && (
                         <>
                             <div className="flex justify-center my-4">
-                                <input type="text" className='p-2 w-4/5 w-100 border rounded-lg' placeholder='Street Address' {...register("streetAddress")} />
+                                <input type="text" className='p-2 w-4/5 w-100 border rounded-lg' defaultValue={defaultValues.street} placeholder='Street Address' {...register("street")} />
                             </div>
                             <div className="flex justify-center my-4">
-                                <input type="text" className='p-2 w-4/5 w-100 border rounded-lg' placeholder='Zip Code' {...register("zipcode")} />
+                                <input type="text" className='p-2 w-4/5 w-100 border rounded-lg' defaultValue={defaultValues.zipcode} placeholder='Zip Code' {...register("zipcode")} />
                             </div>
                         </>
                     )}
@@ -81,23 +76,25 @@ export default function WhereForm() {
                 </div>
                     {hostingOption === "venue" && (
                         <>
-                        <div className="flex justify-center my-4"><p></p></div>
-                            <div className="flex justify-center my-4">
-                                <input type="text" className='p-2 w-4/5 w-100 border rounded-lg' placeholder='Zip Code' {...register("zipcode")} />
-                            </div>
-                            <div className="grid justify-center my-4">
-                            <label className='' htmlFor="maxDistance">Maximum Distance (in miles)</label>
+                            <div className="flex justify-center my-4"><p></p></div>
+                                <div className="flex justify-center my-4">
+                                    <input type="text" className='p-2 w-4/5 w-100 border rounded-lg' defaultValue={defaultValues.zipcode} placeholder='Zip Code' {...register("zipcode", { required: true })} />
+                                </div>
+                                <div className="grid justify-center my-4">
+                                <label className='' htmlFor="maxDistance">Maximum Distance (in miles)</label>
                                 <input
-                                className='block'
-                                type="range"
-                                id="maxDistance"
-                                {...register('maxDistance', { required: 'Please enter a maximum distance' })}
-                                min={0}
-                                max={100}
-                                value={maxDistance}
-                                onChange={handleSliderChange}
-                                />
-                                <span>{maxDistance} miles</span>                           
+                                    className='block'
+                                    type="range"
+                                    id="maxDistance"
+                                    {...register('maxDistance')}
+                                    min={0}
+                                    max={100}
+                                    value={maxDistance}
+                                    onChange={handleSliderChange} />
+                                <span>{maxDistance} miles</span>    
+                                <div className="flex justify-center">
+                                    <button className="border border-black py-1 rounded-full mx-auto my-4 px-4" type="submit">Find Venues</button>
+                                </div>                       
                             </div>
                         </>
                     )}

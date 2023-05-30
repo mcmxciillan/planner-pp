@@ -8,7 +8,7 @@ export default function LandingPage() {
     return (
         <div>
             <div className="flex justify-center mb-6">
-                <h1 className="">{`{{{{{{ Planner++ }}}}}}`}</h1>
+                <p className="my-4 text-xl font-bold">{`Plannette`}</p>
             </div>
             <div className="flex justify-center my-2">
                 <Link to="/signup" className="text-center border py-1 px-2 rounded-full mx-auto  w-1/4">Sign Up</Link>

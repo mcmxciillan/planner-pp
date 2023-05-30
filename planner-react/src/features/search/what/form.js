@@ -1,12 +1,16 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
-// import { setWhat } from '../../slices/newEventSlice'
 import GoBackButton from "../../../components/goBackButton";
 import { setWhat } from "../../../slices/newEventSlice";
+import { useSelector } from "react-redux";
+import { selectWhat } from "../../../slices/newEventSlice";
 
 export default function WhatForm() {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const defaultValues = useSelector(selectWhat)
+    const { register, handleSubmit, formState: { errors } } = useForm({
+        defaultValues
+    });
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -21,10 +25,10 @@ export default function WhatForm() {
             <form onSubmit={handleSubmit(onSubmit)} className='my-4'>
                 <p className="text-center">What is this event?</p>
                 <div className="flex justify-center my-4">
-                    <input type="text" className='p-2 w-4/5 w-100 border rounded-lg' placeholder='Event Name' {...register("eventName", { required: true })} />
+                    <input type="text" className='p-2 w-4/5 w-100 border rounded-lg' defaultValue={defaultValues?.name} placeholder='Event Name' {...register("eventName", { required: true })} />
                 </div>
                 <div className="flex justify-center my-4">
-                    <input type="textarea" className='p-2 w-4/5 w-100 border rounded-lg' placeholder='Event Description' {...register("eventDescription", { required: false })} />
+                    <input type="textarea" className='p-2 w-4/5 w-100 border rounded-lg' defaultValue={defaultValues?.description } placeholder='Event Description' {...register("eventDescription", { required: false })} />
                 </div>
                 <div className="flex justify-center my-4">
                     <input

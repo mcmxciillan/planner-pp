@@ -16,7 +16,7 @@ export default function LogOutButton() {
     const dispatch = useDispatch();
 
     return (
-        <div>
+        <div className="text-xs text-white text-center">
             <button onClick={() => {
                 dispatch(clearJWT())
                 dispatch(logUserOut())

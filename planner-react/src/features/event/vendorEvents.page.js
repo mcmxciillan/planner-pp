@@ -15,10 +15,10 @@ export default function VendorEventsPage() {
     useEffect(() => {
         async function loadData() {
             dispatch(fetchVendorEvents(vendor.id));
-            await setDataLoaded(true);
+            setDataLoaded(true);
         }
         loadData();
-    }, [vendor.id, dispatch, events]);
+    }, [vendor.id, dispatch]);
 
     return(
         <div>

@@ -1,6 +1,9 @@
 import { Link, useParams } from "react-router-dom"
 import GoBackButton from "../../components/goBackButton"
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { selectVendor } from "../../slices/vendorSlice";
+import { selectUser } from "../../slices/userSlice";
 
 export default function EventDetails() {
     const {eventId} = useParams();
@@ -8,6 +11,8 @@ export default function EventDetails() {
     const [eventOrganizers, setEventOrganizers] = useState([])
     const [eventVendors, setEventVendors] = useState([])
     const [isLoading, setIsLoading] = useState(true);
+    const vendor = useSelector(selectVendor);
+    const user = useSelector(selectUser);
 
     useEffect(() => {
         async function fetchEventDetails() {
@@ -49,7 +54,7 @@ export default function EventDetails() {
                 <p>Event Date: {new Date(event.date.$date).toString()}</p>
                 <p>Starts @ {event.start_time}</p>
                 <p>Duration: {event.duration / 60} hours</p>
-                { eventOrganizers.length > 1 &&
+                {
                     <div className="my-4">
                         <p className="font-bold text-center">Organizers</p>
                         <ul className="grid">
@@ -58,7 +63,7 @@ export default function EventDetails() {
                                 <li className="grid border rounded-xl w-4/5 mx-auto p-2 my-2 text-center" key={i}>
                                     <p>{o.firstName} {o.lastName}</p>
                                     <p>{o.email}</p>
-                                    <Link className="mx-auto text-center p-2 border rounded-lg" to={`message/organizer/${o._id.$oid}`}>Message</Link>
+                                    {user._id !== o._id.$oid && <Link className="mx-auto text-center p-2 border rounded-lg" to={`message/organizer/${o._id.$oid}`}>Message</Link>}
                                 </li>
                             ))}
                         </ul>
@@ -76,7 +81,7 @@ export default function EventDetails() {
                             </li>
                         ))}
                     </ul>
-                    </div>
+                </div>
             </div>
         </div>
     )

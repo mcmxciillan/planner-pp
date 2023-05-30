@@ -10,7 +10,7 @@ export default function GoBackButton() {
     const navigate = useNavigate();
 
     return (
-        <div>
+        <div className="m-4">
             <button onClick={() => navigate(-1)}>{`<- Go Back`}</button>
         </div>
     )

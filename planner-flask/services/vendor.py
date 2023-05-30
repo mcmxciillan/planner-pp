@@ -25,8 +25,8 @@ class VendorService:
         return vendor
     
     @staticmethod
-    def get_venues_by_zipcode(zipcode):
-        venues = Vendor.objects(vendorType='venue', address__zipcode=zipcode)
+    def get_venues_by_zipcode(zipcode: str):
+        venues = Vendor.objects(vendorType='Venue', address__zipcode=zipcode)
         return venues
 
     @staticmethod

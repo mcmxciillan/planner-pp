@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required
 from services.vendor import VendorService
 from services.user import UserService
+from services.zipcode import ZipcodeService
 from bson import ObjectId
 
 vendor_controller = Blueprint('vendor_controller', __name__)
@@ -30,13 +31,16 @@ def get_all_vendors():
     else:
         return jsonify(message='Error fetching vendors'), 400
 
-@vendor_controller.route('/venue/<zipcode>')
+@vendor_controller.route('/venue/<zipcode>', methods=['POST'])
 def get_venues_by_zipcode(zipcode):
-    venues = VendorService.get_venues_by_zipcode(zipcode=zipcode)
-    if venues:
-        return jsonify(venues), 200
-    else:
-        return jsonify(message='Error fetching venues'), 400
+    data = request.get_json()
+    distance = float(data.get('distance'))
+    venues = []
+    for zip in ZipcodeService.get_zipcodes_within_range(zipcode, distance):
+        zip = str(zip)
+        '''Get venues for each zipcode and append it to the venues list'''
+        venues += VendorService.get_venues_by_zipcode(zip)
+    return jsonify(venues), 200
 
 @vendor_controller.route('/vendor/<vendor_id>', methods=['GET'])
 def get_vendor_by_id(vendor_id):

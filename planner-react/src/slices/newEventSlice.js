@@ -10,9 +10,13 @@ export const newEventSlice = createSlice({
             organizers: null,
             vendors: null,
             startTime: null,
-            address: null,
+            address: {street: null, zipcode: null},
+            venue: null,
             duration: null
         },
+        analytics: {
+            selectedServices: [],
+        }
     },
     reducers: {
         setWhat: (state, action) => {
@@ -24,7 +28,8 @@ export const newEventSlice = createSlice({
         setWhere: (state, action) => {
             const where = action.payload;
             console.log("Setting Where: ", where)
-            state.newEvent.address = {street: where.address, zipcode: where.zipcode}
+            state.newEvent.address = {street: where.street, zipcode: where.zipcode}
+            state.newEvent.venue = where.venue
         },
         setWho: (state, action) => {
             const who = action.payload;
@@ -43,7 +48,7 @@ export const newEventSlice = createSlice({
             // Analytics info
             const why = action.payload;
             console.log("Setting Why: ", why)
-            state.newEvent.analytics = why
+            state.analytics = why
         },
         setEvent: (state, action) => {
             const e = action.payload;
@@ -68,4 +73,48 @@ export const newEventSlice = createSlice({
 
 export const { setWhat, setWhere, setWho, setWhen, setWhy, setEvent, clearEvent } = newEventSlice.actions
 export const selectNewEvent = (state) => state.newEvent.newEvent
+export const selectEventReady = (state) => {
+    // checks if all values for the new event are not null
+    const event = state.newEvent.newEvent
+    return (
+        event.name !== null && 
+        event.date !== null && 
+        event.description !== null && 
+        event.organizers !== null && 
+        event.startTime !== null && 
+        event.address.street !== null && 
+        event.address.zipcode !== null
+    )
+}
+export const selectWhat = (state) => {
+    return {
+        name: state.newEvent.newEvent.name,
+        description: state.newEvent.newEvent.description
+    }
+}
+export const selectWhere = (state) => {
+    return {
+        street: state.newEvent.newEvent.address.street,
+        zipcode: state.newEvent.newEvent.address.zipcode,
+        venue: state.newEvent.newEvent.venue
+    }
+}
+export const selectWho = (state) => {
+    return {
+        organizer: state.newEvent.newEvent.organizers,
+        vendors: state.newEvent.newEvent.vendors
+    }
+}
+export const selectWhen = (state) => {
+    return {
+        date: state.newEvent.newEvent.date,
+        startTime: state.newEvent.newEvent.startTime,
+        duration: state.newEvent.newEvent.duration
+    }
+}
+export const selectWhy = (state) => {
+    return {
+        analytics: state.newEvent.analytics
+    }
+}
 export default newEventSlice.reducer

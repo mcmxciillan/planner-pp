@@ -2,8 +2,7 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../slices/userSlice";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { fetchUserEvents } from "../../slices/eventsSlice";
-import { selectEvents } from "../../slices/eventsSlice";
+import { fetchUserEvents, selectEvents } from "../../slices/eventsSlice";
 import { useDispatch } from "react-redux";
 
 export default function EventsPage() {
