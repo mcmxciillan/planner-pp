@@ -1,5 +1,4 @@
 import json
-from flask import jsonify
 from bson.objectid import ObjectId
 from models.payment import Payment
 
@@ -18,19 +17,20 @@ class PaymentService:
     def add_payment(data):
         payment = Payment(**data)
         payment.save()
-        return jsonify(message='Payment added successfully'), 200
+        return payment
 
     @staticmethod
     def update_payment(payment_id, data):
-        Payment.objects.get(id=ObjectId(payment_id)).update(**data)
-        return jsonify(message='Payment updated successfully'), 200
+        payment = Payment.objects.get(id=ObjectId(payment_id))
+        payment.update(**data)
+        return payment
 
     @staticmethod
     def delete_payment(payment_id):
-        Payment.objects.get(id=ObjectId(payment_id)).delete()
-        return jsonify(message='Payment deleted successfully'), 200
+        payment = Payment.objects.get(id=ObjectId(payment_id))
+        payment.delete()
+        return True
 
     @staticmethod
     def process_payment(data):
-        print("Payment info {}".format(data))
         return True

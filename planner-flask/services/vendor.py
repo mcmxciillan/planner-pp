@@ -1,4 +1,3 @@
-from flask import jsonify
 from models.vendor import Vendor
 from bson import ObjectId
 
@@ -59,7 +58,7 @@ class VendorService:
     def delete_vendor(vendor_id):
         vendor = Vendor.objects.get(id=vendor_id)
         vendor.delete()
-        return jsonify(message='Vendor deleted successfully.'), 200
+        return True
 
     @staticmethod
     def find_vendors_by_type(vendor_type, limit=100):
