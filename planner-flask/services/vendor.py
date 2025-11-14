@@ -11,7 +11,6 @@ class VendorService:
 
     @staticmethod
     def create_vendor(data):
-        print("Create vendor data", data)
         vendorData = {
             "email": data["email"],
             "name": data["name"],
@@ -41,7 +40,7 @@ class VendorService:
 
     @staticmethod
     def update_vendor(vendor_id, data):
-        Vendor.objects(_id=vendor_id).update(**data)
+        Vendor.objects(id=vendor_id).update(**data)
         vendor = Vendor.objects.get(id=vendor_id)
         return vendor
     

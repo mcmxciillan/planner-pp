@@ -37,32 +37,28 @@ export default function App() {
     <Router>
       <Navbar />
       <Routes>
-        <Route exact path="/" element={userLoggedIn ? <HomePage user={user}/> : <LandingPage/>}/>
-        <Route exact path="/signup" element={<SignUpPage/>} />
-        <Route exact path="/login" element={<LogInPage/>} />
-        <Route exact path="/vendorSignup" element={<VendorSignupPage/>}/>
-        <Route exact path="/home/:userId" element={<HomePage/>} />
-        <Route exact path="/vendor/:vendorId" element={<VendorDetails />}/>
-        <Route exact path="/vendor/services" element={<VendorServicesPage />}/>
-        <Route exact path="/event/:eventId" element={<EventDetails />} />
-        <Route exact path="/event/edit/:eventId" element={<EditEvent />} />
-        <Route exact path="/events" element={<CreateEventPage/>} />
-        <Route exact path="/events/what" element={<WhatForm/>} />
-        <Route exact path="/events/where" element={<WhereForm/>} />
-        <Route exact path="/events/where/results" element={<WhereResults/>} />
-        <Route exact path="/events/who" element={<WhoForm/>} />
-        <Route exact path='/events/who/results' element={<WhoResults/>} />
-        <Route exact path="/events/when" element={<WhenForm/>} />
-        <Route exact path="/events/why" element={<WhyForm/>} />
-        <Route exact path="/events/how" element={<HowPage/>} />
-        <Route exact path="/events/user/:userId" element={<EventsPage/>} />
-        <Route exact path="/events/vendor/:vendorId" element={<VendorEventsPage/>} />
-        <Route exact path="/messages" element={<MessagePage/>} />
-        <Route exact path="/event/:eventId/messages" element={<></>} />
-        <Route exact path="/event/:eventId/message/:id" element={<></>} />
-        <Route exact path="/ratings/vendor/:vendorId" element={<RatingPage/>} />
-        <Route exact path="/events/:userId/messages/:threadId" element={<></>} />
-        <Route exact path="/profile/:userId" element={<></>} />
+        <Route path="/" element={userLoggedIn ? <HomePage user={user}/> : <LandingPage/>}/>
+        <Route path="/signup" element={<SignUpPage/>} />
+        <Route path="/login" element={<LogInPage/>} />
+        <Route path="/vendorSignup" element={<VendorSignupPage/>}/>
+        <Route path="/home/:userId" element={<HomePage/>} />
+        <Route path="/vendor/:vendorId" element={<VendorDetails />}/>
+        <Route path="/vendor/services" element={<VendorServicesPage />}/>
+        <Route path="/event/:eventId" element={<EventDetails />} />
+        <Route path="/event/edit/:eventId" element={<EditEvent />} />
+        <Route path="/events" element={<CreateEventPage/>} />
+        <Route path="/events/what" element={<WhatForm/>} />
+        <Route path="/events/where" element={<WhereForm/>} />
+        <Route path="/events/where/results" element={<WhereResults/>} />
+        <Route path="/events/who" element={<WhoForm/>} />
+        <Route path='/events/who/results' element={<WhoResults/>} />
+        <Route path="/events/when" element={<WhenForm/>} />
+        <Route path="/events/why" element={<WhyForm/>} />
+        <Route path="/events/how" element={<HowPage/>} />
+        <Route path="/events/user/:userId" element={<EventsPage/>} />
+        <Route path="/events/vendor/:vendorId" element={<VendorEventsPage/>} />
+        <Route path="/messages" element={<MessagePage/>} />
+        <Route path="/ratings/vendor/:vendorId" element={<RatingPage/>} />
         <Route path='*' element={<ErrorPage/>} />
       </Routes>
   </Router>
