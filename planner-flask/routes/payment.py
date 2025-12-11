@@ -32,8 +32,8 @@ def update_payment(id):
 
 @payment_controller.route('/payments/<id>', methods=['DELETE'])
 def delete_payment(id):
-    payment = PaymentService.delete_payment(id)
-    if payment:
-        return jsonify(payment), 200
+    success = PaymentService.delete_payment(id)
+    if success:
+        return jsonify(message='Payment deleted successfully'), 200
     else:
         return jsonify(message='Error deleting payment'), 400

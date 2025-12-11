@@ -30,5 +30,3 @@ config_by_name = dict(
     test=TestingConfig,
     prod=ProductionConfig
 )
-
-# key = Config.SECRET_KEY

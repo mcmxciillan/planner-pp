@@ -1,4 +1,3 @@
-from flask import jsonify
 from models.vendor import Vendor
 from bson import ObjectId
 
@@ -11,7 +10,6 @@ class VendorService:
 
     @staticmethod
     def create_vendor(data):
-        print("Create vendor data", data)
         vendorData = {
             "email": data["email"],
             "name": data["name"],
@@ -41,7 +39,7 @@ class VendorService:
 
     @staticmethod
     def update_vendor(vendor_id, data):
-        Vendor.objects(_id=vendor_id).update(**data)
+        Vendor.objects(id=vendor_id).update(**data)
         vendor = Vendor.objects.get(id=vendor_id)
         return vendor
     
@@ -60,7 +58,7 @@ class VendorService:
     def delete_vendor(vendor_id):
         vendor = Vendor.objects.get(id=vendor_id)
         vendor.delete()
-        return jsonify(message='Vendor deleted successfully.'), 200
+        return True
 
     @staticmethod
     def find_vendors_by_type(vendor_type, limit=100):

@@ -7,7 +7,6 @@ event_controller = Blueprint('event_controller', __name__)
 @event_controller.route('/events', methods=['POST'])
 def create_event():
     data = request.get_json()
-    print(f"Handling new event creation request: {data}")
     newEvent = {
         'name': data['name'],
         'date': data['date'],

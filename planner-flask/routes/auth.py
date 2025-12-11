@@ -1,7 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import create_access_token
 from models.user import User
-from datetime import datetime
 from services.auth import hash_password, authenticate_user
 
 auth_controller = Blueprint('auth_controller', __name__)
@@ -28,8 +27,7 @@ def signup():
         lastName=last_name,
         email=email,
         password=hashed_password,
-        roles=["User"],
-        createdAt=datetime.utcnow()
+        roles=["User"]
     )
 
     # Save the new user to the database

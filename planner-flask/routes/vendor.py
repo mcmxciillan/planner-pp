@@ -3,6 +3,7 @@ from flask_jwt_extended import jwt_required
 from services.vendor import VendorService
 from services.user import UserService
 from services.zipcode import ZipcodeService
+from models.vendor import Vendor
 from bson import ObjectId
 
 vendor_controller = Blueprint('vendor_controller', __name__)
@@ -11,9 +12,7 @@ vendor_controller = Blueprint('vendor_controller', __name__)
 def create_vendor():
     """Create a new Vendor"""
     data = request.get_json()
-    print(data)
     vendor = VendorService.create_vendor(data)
-    print(data["operator_id"])
     if vendor:
         if UserService.add_vendor_role(ObjectId(data["operator_id"])):
             return jsonify(vendor), 201
